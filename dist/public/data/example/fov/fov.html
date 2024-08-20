@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>相机视场角</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+    <script src="../../libs/jquery/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <button id="btnStartAuto" type="button" class="gemini-buttom-light" onclick="changeCamera(`to120`)">切换FOV为120°</button>
+        <button id="btnStopAuto" type="button" class="gemini-buttom-light" onclick="changeCamera(`to60`)">切换FOV为60°</button>
+        <button id="btnStopAuto" type="button" class="gemini-buttom-light" onclick="changeCamera(`to30`)">切换FOV为30°</button>
+    </div>
+
+    <script type="text/javascript">
+        let mapOptions = {
+            scene: {
+                center: { "lat": 36.734216, "lng": 117.061614, "alt": 147.2, "heading": 192.2, "pitch": -2.3 }
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: true
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+        const transitioner = map.scene._transitioner
+
+        function changeCamera(type) {
+            const tween = map.scene.tweens.add({
+                duration: 4,
+                easingFunction: Cesium.EasingFunction.QUARTIC_OUT,
+                startObject: {
+                    time: 0.0,
+                },
+                stopObject: {
+                    time: 1.0,
+                },
+                update: function (value) {
+                    if (type === "to120") {
+                        map.scene.camera.frustum.fov = ((1.0 + value.time) * 60.0 * Math.PI) / 180.0;
+
+                    } else if (type === "to60") {
+                        map.scene.camera.frustum.fov = ((120.0 - 60 * value.time) * Math.PI) / 180.0;
+                    } else if (type === "to30") {
+                        map.scene.camera.frustum.fov = ((60.0 - 30 * value.time) * Math.PI) / 180.0;
+                    }
+                },
+                complete: function () { },
+            });
+            transitioner._currentTweens.push(tween);
+        }
+
+    </script>
+    <script type="text/javascript">
+        $("#btnStartAuto").click(function () {
+            startAuto()
+        })
+
+        // 停止自动漫游
+        $("#btnStopAuto").click(function () {
+            stopAuto()
+        })
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 118px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+            border: none;
+            margin: 20px;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

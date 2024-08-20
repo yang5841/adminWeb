@@ -1,0 +1,36 @@
+{
+    "AGI_articulations": {
+        "articulations": [
+            {
+                "name": "PlatMove",
+                "stages": [
+                    {
+                        "name": "PlatRotate",
+                        "type": "yRotate",
+                        "minimumValue": -360,
+                        "maximumValue": 360,
+                        "initialValue": 0
+                    }
+                ],
+                "modelNodes": [
+                    "T3-BODY"
+                ]
+            },
+            {
+                "name": "CameraMove",
+                "stages": [
+                    {
+                        "name": "CameraRotate",
+                        "type": "xRotate",
+                        "minimumValue": -360,
+                        "maximumValue": 360,
+                        "initialValue": 0
+                    }
+                ],
+                "modelNodes": [
+                    "T3_EYE"
+                ]
+            }
+        ]
+    }
+}

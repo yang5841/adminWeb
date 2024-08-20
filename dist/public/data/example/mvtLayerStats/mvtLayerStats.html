@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>矢量切片要素统计</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/ol/ol.js"></script>
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/jquery/jquery-3.6.0.min.js"></script>
+    <script src="../../libs/stats/stats.js"></script>
+    <script src="../../libs/echarts/echarts.min.js"></script>
+
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <div id="myEchart" class="gemini-echart" style="width: 600px; height: 400px;"></div>
+    </div>
+
+    <script type="text/javascript">
+
+        let mapOptions = {
+            scene: {
+                globe: {
+                    baseColor: "#f5f4ee",
+                    depthTestAgainstTerrain: false
+                },
+                fxaa: true,
+                msaaSamples: 4,
+                scene3DOnly: true,
+                requestRenderMode: true, // 开启显式渲染
+                center: { "lat": 30.231378, "lng": 120.142043, "alt": 1040.3, "heading": 0.3, "pitch": -89.5 }
+            },
+            mouse: {
+                enabledMoveTarget: false,
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: false
+            },
+            control: {
+                // baseLayerPicker: true,
+                // timeline: { zoom: true, enabled: true }, // 方式1：options中添加控件 ; zoom - 禁止缩放
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: false,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+                    show: false,
+                },
+            ],
+            layers: [
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.postProcessStages.fxaa.enabled = true
+        map.scene.globe.enableLighting = true;
+        map.scene.fog.enabled = false;
+
+        map.scene.globe.dynamicAtmosphereLighting = true;
+        map.scene.globe.dynamicAtmosphereLightingFromSun = false;
+
+        const ellipsoidProvider = new Cesium.EllipsoidTerrainProvider({
+            tilingScheme: new Cesium.WebMercatorTilingScheme({
+                ellipsoid: map.scene.globe.ellipsoid,
+            }),
+        });
+        // map.viewer.terrainProvider = ellipsoidProvider;
+
+
+        let mvtlayer
+        function delMVT() {
+            map.removeThing(mvtlayer)
+            map.graphicLayer.clear()
+        }
+
+        function addMVT() {
+            delMVT()
+            mvtlayer = new gemini.thing.MvtLayer2({
+                tdt: true,
+                url: [
+                    `https://zhejiang.tianditu.gov.cn/vtiles/maps/tdt_zj_zw/{zoom}/{x}/{y}.mvt?v=2023`,
+                ],
+            })
+
+            map.addThing(mvtlayer)
+        }
+
+        function styleFnTest(feature, zoom) {
+            let style = {
+                type: Cesium.Material.ColorType,
+                id: "1",
+                show: true,
+                color: Cesium.Color.RED
+            }
+            return style
+        }
+
+        addMVT()
+
+        // 创建性能监视器
+        let stats = new Stats()
+
+        // 设置监视器面板，传入面板id（0: fps, 1: ms, 2: mb）
+        stats.setMode(0)
+
+        // 设置监视器位置
+        stats.domElement.style.position = 'absolute'
+        stats.domElement.style.right = '10px'
+        stats.domElement.style.top = '100px'
+
+        // 将监视器添加到页面中
+        document.body.appendChild(stats.domElement)
+
+        function render() {
+            // 更新帧数
+            stats.update()
+            requestAnimationFrame(render)
+        }
+        render()
+
+        // 基于准备好的dom，初始化echarts实例
+        const myChart = echarts.init(document.getElementById('myEchart'), 'dark');
+
+        let series = [
+            {
+                name: '点总数',
+                type: 'bar',
+                stack: '点',
+                data: [],
+                itemStyle: {
+                    color: '#05c091'
+                }
+            },
+            {
+                name: '点显示',
+                type: 'bar',
+                stack: '点',
+                data: [],
+                itemStyle: {
+                    color: '#7cffb2'
+                }
+            },
+            {
+                name: '线总数',
+                type: 'bar',
+                stack: '线',
+                data: [],
+                itemStyle: {
+                    color: '#4992ff'
+                }
+            },
+            {
+                name: '线显示',
+                type: 'bar',
+                stack: '线',
+                data: [],
+                itemStyle: {
+                    color: '#58d9f9'
+                }
+            },
+            {
+                name: '面总数',
+                type: 'bar',
+                stack: '面',
+                data: [],
+                itemStyle: {
+                    color: '#ff6e76'
+                }
+            },
+            {
+                name: '面显示',
+                type: 'bar',
+                stack: '面',
+                data: [],
+                itemStyle: {
+                    color: '#fddd60'
+                }
+            },
+        ]
+
+        // 指定图表的配置项和数据
+        const option = {
+            backgroundColor: '#343333',
+            tooltip: {},
+            legend: {
+                data: ['点总数', '点显示', '线总数', '线显示', '面总数', '面显示']
+            },
+            xAxis: {
+                data: ["1", "2", "3", "4", "5", "6"]
+            },
+            yAxis: {},
+            series: series
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        setInterval(function () {
+
+            option.series = getStats(mvtlayer)
+            // 更新图例
+            myChart.setOption(option)
+        }, 2000);
+
+        function getStats(mvtlayer) {
+            let map = mvtlayer.primitivesStats
+            let pointDataNum = 0
+            let pointShowNum = 0
+            let polylineDataNum = 0
+            let polylineShowNum = 0
+            let polygonDataNum = 0
+            let polygonShowNum = 0
+            for (pbf of map.entries()) {
+                pointDataNum += pbf[1].pointDataNum
+                pointShowNum += pbf[1].pointShowNum
+                polylineDataNum += pbf[1].polylineDataNum
+                polylineShowNum += pbf[1].polylineShowNum
+                polygonDataNum += pbf[1].polygonDataNum
+                polygonShowNum += pbf[1].polygonShowNum
+            }
+            if (series[0].data.length == 6) {
+                series[0].data.shift()
+                series[1].data.shift()
+                series[2].data.shift()
+                series[3].data.shift()
+                series[4].data.shift()
+                series[5].data.shift()
+            }
+
+            series[0].data.push(pointDataNum)
+            series[1].data.push(pointShowNum)
+            series[2].data.push(polylineDataNum)
+            series[3].data.push(polylineShowNum)
+            series[4].data.push(polygonDataNum)
+            series[5].data.push(polygonShowNum)
+
+            return series
+        }
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 620px;
+            height: 420px;
+            right: 20px;
+            bottom: 20px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-echart {
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+    </style>
+
+</body>
+
+</html>

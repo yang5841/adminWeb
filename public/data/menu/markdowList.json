@@ -1,0 +1,76 @@
+{
+    "msg": "操作成功",
+    "code": 200,
+    "type": "course",
+    "data": [
+        {
+            "name": "开始教程",
+            "hidden": false,
+            "index": "1",
+            "meta": {
+                "title": "开始教程",
+                "icon": "BookOutlined"
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "1-1",
+                    "id": "page_101",
+                    "meta": {
+                        "title": "安装引用",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect"
+                    },
+                    "main": "/readme/introduction.md"
+                }
+            ]
+        },
+        {
+            "name": "版本日志",
+            "hidden": false,
+            "index": "2",
+            "meta": {
+                "title": "版本日志",
+                "icon": "BookOutlined"
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "2-1",
+                    "id": "page_201",
+                    "meta": {
+                        "title": "版本日志",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect"
+                    },
+                    "main": "/readme/version.md"
+                }
+            ]
+        },
+        {
+            "name": "敬请期待",
+            "hidden": false,
+            "index": "3",
+            "meta": {
+                "title": "敬请期待",
+                "icon": "HourglassOutlined"
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "3-1",
+                    "id": "page_301",
+                    "meta": {
+                        "title": "敬请期待",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect"
+                    },
+                    "main": ""
+                }
+            ]
+        }
+    ],
+    "routerList":[
+        "/readme/introduction.md"
+    ]
+}

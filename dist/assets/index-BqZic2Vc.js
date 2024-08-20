@@ -1,0 +1,1 @@
+import{_ as s}from"./index-SWlZ9RA-.js";import{r as n,o as t,e as o,f as l,i as u}from"./index-C27tGZCI.js";const f={__name:"index",setup(c){const e=n("/api/AngleMeasure.html");return(m,r)=>(t(),o("div",null,[l(u(s),{src:e.value,"onUpdate:src":r[0]||(r[0]=a=>e.value=a)},null,8,["src"])]))}};export{f as default};

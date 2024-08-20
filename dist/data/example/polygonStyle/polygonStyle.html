@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>多边形样式</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/turf/turf.min.js"></script>
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <div style="position: relative; display: flex; justify-content: space-around; top: 25px;">
+            <div class="gemini-buttom-light" onclick="changeWater()">水面样式</div>
+            <div class="gemini-buttom-light" onclick="changeGrass()">草地样式</div>
+        </div>
+        <div style="position: relative; display: flex; justify-content: space-around; top: 50px;">
+            <div class="gemini-buttom-light" onclick="changeNeon()">霓虹灯样式</div>
+            <div class="gemini-buttom-light" onclick="changeAsphalt()">柏油路样式</div>
+        </div>
+        <div style="position: relative; display: flex; justify-content: space-around; top: 75px;">
+            <div class="gemini-buttom-light" onclick="changeOutline()">描边样式</div>
+            <div class="gemini-buttom-light" onclick="changeFacet()">碎石面样式</div>
+        </div>
+
+        <div style="position: relative; display: flex; justify-content: space-around; top: 100px;">
+            <div class="gemini-buttom-dark" onclick="removeAll()">清除要素</div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+
+        let mapOptions = {
+            scene: {
+                globe: {
+                    depthTestAgainstTerrain: true,
+                    showGroundAtmosphere: false,
+                },
+                center: { "lat": 36.718338, "lng": 117.055491, "alt": 604.2, "heading": 43.1, "pitch": -39.8 }
+            },
+            mouse: {
+                enabledMoveTarget: false,
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: true
+            },
+            control: {
+                // baseLayerPicker: true,
+                // timeline: { zoom: true, enabled: true }, // 方式1：options中添加控件 ; zoom - 禁止缩放
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.postProcessStages.fxaa.enabled = true
+        map.scene.globe.enableLighting = true;
+        map.scene.fog.enabled = false;
+
+        map.scene.globe.dynamicAtmosphereLighting = true;
+        map.scene.globe.dynamicAtmosphereLightingFromSun = false;
+
+        // 设置光照时间
+        let currentTime = Cesium.JulianDate.fromIso8601(
+            "2021-06-21T08:27:37"
+        )
+
+        map.currentTime = currentTime
+
+        // let startTime = Cesium.JulianDate.fromIso8601("2021-06-20")
+        // let stopTime = Cesium.JulianDate.fromIso8601("2021-06-22")
+        // map.controls.timeline.zoomTo(startTime, stopTime)
+
+        const polygonLayer = new gemini.layer.GraphicLayer()
+        map.addLayer(polygonLayer)
+
+        changeWater()
+
+        function addPolygon(style) {
+            let polygon = new gemini.graphic.PolygonEntity({
+                positions: [
+                    [
+                        117.05844,
+                        36.724839,
+                        16.1
+                    ],
+                    [
+                        117.059586,
+                        36.724706,
+                        14.4
+                    ],
+                    [
+                        117.060154,
+                        36.724167,
+                        14.6
+                    ],
+                    [
+                        117.061382,
+                        36.723542,
+                        16.2
+                    ],
+                    [
+                        117.06207,
+                        36.722788,
+                        8.4
+                    ],
+                    [
+                        117.062137,
+                        36.722142,
+                        16.2
+                    ],
+                    [
+                        117.060803,
+                        36.72176,
+                        13.6
+                    ],
+                    [
+                        117.059842,
+                        36.721239,
+                        8.5
+                    ],
+                    [
+                        117.057484,
+                        36.724376,
+                        16.9
+                    ]
+                ],
+                style: style
+            })
+            polygonLayer.addGraphic(polygon)
+        }
+
+        // 水面样式
+        function changeWater() {
+            removeAll()
+
+            let style = {
+                materialType: gemini.MaterialType.Water,
+                materialOptions: {
+                    normalMap: "../img/textures/waterNormals.jpg", // 水正常扰动的法线图
+                    frequency: 800.0, // 控制波数的数字。
+                    animationSpeed: 0.02, // 控制水的动画速度的数字。
+                    amplitude: 1.0, // 控制水波振幅的数字。
+                    specularIntensity: 0.8, // 控制镜面反射强度的数字。
+                    baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+                    blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
+                    opacity: 0.4, // 透明度
+                },
+                clampToGround: true
+            }
+            addPolygon(style)
+        }
+
+        // 草地样式
+        function changeGrass() {
+            removeAll()
+
+            let style = {
+                materialType: gemini.MaterialType.PolyGrass,
+                materialOptions: {
+                    evenColor: new Cesium.Color(0.25, 0.4, 0.1, 1.0),
+                    oddColor: new Cesium.Color(0.1, 0.1, 0.1, 1.0)
+                },
+
+                clampToGround: true
+            }
+            addPolygon(style)
+        }
+
+        // 霓虹样式
+        function changeNeon() {
+            removeAll()
+
+            let style = {
+                materialType: gemini.MaterialType.NeonLight,
+                materialOptions: {
+
+                },
+                clampToGround: true
+            }
+            addPolygon(style)
+        }
+
+        // 柏油马路样式
+        function changeAsphalt() {
+            removeAll()
+
+            let style = {
+                materialType: gemini.MaterialType.PolyAsphalt,
+                materialOptions: {
+                    color: new Cesium.Color(0.15, 0.15, 0.15, 1.0),
+                    size: 0.02,
+                },
+                clampToGround: true
+            }
+            addPolygon(style)
+        }
+
+        // 碎石面样式
+        function changeFacet() {
+            removeAll()
+
+            let style = {
+                materialType: gemini.MaterialType.PolyFacet,
+                materialOptions: {
+                    evenColor: new Cesium.Color(0.25, 0.25, 0.25, 0.75),
+                    oddColor: new Cesium.Color(0.75, 0.75, 0.75, 0.75),
+                    frequency: 100,
+                },
+                clampToGround: true
+            }
+            addPolygon(style)
+        }
+
+        // 描边样式
+        function changeOutline() {
+            removeAll()
+
+            let style = {
+                outline: true,
+                outlineWidth: 5,
+                outlineColor: Cesium.Color.RED,
+                clampToGround: true
+            }
+            addPolygon(style)
+        }
+
+
+        // 清除所有
+        function removeAll() {
+            polygonLayer.clear()
+        }
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 20px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 118px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

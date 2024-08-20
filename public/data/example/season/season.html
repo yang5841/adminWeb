@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>四季模拟</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="mask" class="gemini-mask">
+        <div class="loader"></div>
+    </div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <div style="position: relative; display: flex; justify-content: space-around; top: 25px;">
+            <div class="gemini-buttom-light" onclick="toFall()">秋天</div>
+            <div class="gemini-buttom-light" onclick="toWinter()">冬天</div>
+        </div>
+
+        <div style="position: relative; display: flex; justify-content: space-around; top: 65px;">
+            <div class="gemini-buttom-light" onclick="toSpring()">春天</div>
+            <div class="gemini-buttom-light" onclick="toSummer()">夏天</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+        let mapOptions = {
+            scene: {
+                globe: {
+                    baseColor: "#d5e1e1",
+                    show: true,
+                    showGroundAtmosphere: true,
+                },
+                showSkyAtmosphere: true, // 关闭Cesium自带大气
+                center: { "lat": 51.051107, "lng": 13.740223, "alt": 347.3, "heading": 31.7, "pitch": -22.8 }
+            },
+            // mouse: {
+            //     enabledMoveTarget: false,
+            // },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: false
+            },
+            control: {
+                clockAnimate: true, // 时钟动画控制(左下角)
+                timeline: true, // 是否显示时间线控件
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: false,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.postProcessStages.fxaa.enabled = true
+        map.scene.globe.enableLighting = true;
+        map.scene.fog.enabled = false;
+
+        map.scene.globe.dynamicAtmosphereLighting = true;
+        map.scene.globe.dynamicAtmosphereLightingFromSun = false;
+
+        // 光照阴影率处理类
+        let shadows = new gemini.thing.Shadows({
+            multiplier: 1600
+        })
+        map.addThing(shadows)
+
+        // const dateTime = new Date("2024-4-21" + " 23:00:00")
+        // shadows.time = dateTime
+
+        let tiles3dLayer = new gemini.layer.TilesetLayer({
+            name: "德国",
+            url: window.GLOBAL_CONFIG.dataSever + "/data/3dtiles/german/tileset.json",
+            maximumScreenSpaceError: 35,
+            skipLevelOfDetail: true,
+            preferLeaves: true,
+            position: {
+                alt_offset: 200
+            },
+
+            flyTo: false,
+        })
+        map.addLayer(tiles3dLayer)
+
+        const treeShader = new Cesium.CustomShader({
+            uniforms: {
+                u_toFall: {
+                    type: Cesium.UniformType.FLOAT,
+                    value: 0.0,
+                },
+                u_toWinter: {
+                    type: Cesium.UniformType.FLOAT,
+                    value: 0.0,
+                },
+                u_toSummer: {
+                    type: Cesium.UniformType.FLOAT,
+                    value: 0.0,
+                }
+            },
+            varyings: {
+                v_normal: Cesium.VaryingType.VEC3
+            },
+            // lightingModel: Cesium.LightingModel.UNLIT,
+            lightingModel: Cesium.LightingModel.PBR,
+            //translucencyMode: Cesium.CustomShaderTranslucencyMode.OPAQUE,
+            vertexShaderText: `
+    void vertexMain(VertexInput vsInput, inout czm_modelVertexOutput vsOutput) {
+        v_normal = vsInput.attributes.normalMC;
+    }`,
+
+            fragmentShaderText: `
+    void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
+    {
+
+        // 根据normal判断叶子
+        if(dot(v_normal, vec3(.0, 1.0, .0)) > (1. - u_toWinter)){
+            material.alpha = .0;
+        }
+
+        // 根据rg判断叶子
+        if(material.diffuse.g > material.diffuse.r){
+            material.diffuse = mix(material.diffuse, vec3(0.499581, 0.165893, 0.004221), u_toFall);
+            material.diffuse = mix(material.diffuse, vec3(0.0, 0.3, 0.06), u_toSummer);
+        }
+        
+    } `
+        })
+
+        const tree = new gemini.graphic.ModelPrimitive({
+            name: "tree1",
+            // position: [117.123172, 36.660831, 0],
+            position: [13.740646, 51.051698, 311.6],
+            style: {
+                url: "../data/file/gltf/tree1.glb",
+                scale: 1,
+                customShader: treeShader,
+            },
+
+            flyTo: false
+        })
+
+        const tree2 = new gemini.graphic.ModelPrimitive({
+            name: "tree2",
+            position: [13.740399, 51.051712, 312.4],
+            style: {
+                url: "../data/file/gltf/tree1.glb",
+                scale: 1,
+                customShader: treeShader,
+            },
+
+            flyTo: false
+        })
+
+        const tree3 = new gemini.graphic.ModelPrimitive({
+            name: "tree3",
+            position: [13.741235, 51.051743, 312.1],
+            style: {
+                url: "../data/file/gltf/tree1.glb",
+                scale: 1,
+                customShader: treeShader,
+            },
+
+            flyTo: false
+        })
+
+        // 降雪效果
+        let snowEffect = new gemini.effect.SnowEffect({
+            speed: 1,
+            enabled: false
+        })
+        map.addEffect(snowEffect)
+
+        // 积雪效果
+        let snowCover = new gemini.effect.SnowCoverEffect({
+            maxHeight: 8000, // 大于此高度后不显示
+            alpha: 0.0,
+            enabled: false
+        })
+        map.addEffect(snowCover)
+
+        // 降雨效果
+        let rainEffect = new gemini.effect.RainEffect({
+            speed: 5,
+            size: 5,
+            direction: -30,
+            enabled: false
+        })
+        map.addEffect(rainEffect)
+
+        let timer
+
+        function toFall() {
+            let u_toFall = 0.0
+            rainEffect.enabled = false
+            clearInterval(timer)
+            treeShader.setUniform("u_toWinter", 0.0)
+            treeShader.setUniform("u_toSummer", 0.0)
+            treeShader.setUniform("u_toFall", u_toFall)
+            rainEffect.enabled = true
+            rainEffect.size = 20
+            snowEffect.enabled = false
+            snowCover.enabled = false
+
+            timer = setInterval(() => {
+                if (u_toFall < 0.6) {
+                    u_toFall += 0.01
+                    if (rainEffect.size > 9.0) {
+                        rainEffect.size -= 1.0
+                    } else {
+                        rainEffect.enabled = false
+                    }
+                    treeShader.setUniform("u_toFall", u_toFall)
+                } else {
+                    clearInterval(timer)
+                    rainEffect.enabled = false
+                }
+
+            }, 100)
+        }
+
+        function toWinter() {
+            let u_toWinter = 0.0
+            clearInterval(timer)
+            treeShader.setUniform("u_toWinter", u_toWinter)
+            treeShader.setUniform("u_toFall", 1.0)
+            treeShader.setUniform("u_toSummer", 0.0)
+            snowEffect.enabled = true
+            snowCover.enabled = true
+            rainEffect.enabled = false
+
+            timer = setInterval(() => {
+                if (u_toWinter < 1.0) {
+                    snowCover.alpha += 0.01
+                    u_toWinter += 0.01
+                    treeShader.setUniform("u_toWinter", u_toWinter)
+                } else {
+                    clearInterval(timer)
+                }
+
+            }, 100)
+        }
+
+        function toSpring() {
+            let u_toWinter = 1.0
+            clearInterval(timer)
+            treeShader.setUniform("u_toWinter", u_toWinter)
+            treeShader.setUniform("u_toFall", 0.0)
+            treeShader.setUniform("u_toSummer", 0.0)
+            snowEffect.enabled = false
+            snowCover.enabled = true
+            rainEffect.enabled = false
+            snowCover.alpha = 1.0
+
+            timer = setInterval(() => {
+                if (u_toWinter > 0.0) {
+                    u_toWinter -= 0.01
+                    if (snowCover.alpha > 0.02) {
+                        snowCover.alpha -= 0.02
+                    }
+                    treeShader.setUniform("u_toWinter", u_toWinter)
+                } else {
+                    snowEffect.enabled = false
+                    snowCover.enabled = false
+                    clearInterval(timer)
+                }
+
+            }, 100)
+        }
+
+        function toSummer() {
+            let u_toSummer = 0.0
+            clearInterval(timer)
+            treeShader.setUniform("u_toWinter", 0.0)
+            treeShader.setUniform("u_toFall", 0.0)
+            treeShader.setUniform("u_toSummer", u_toSummer)
+            rainEffect.enabled = true
+            rainEffect.size = 5
+            snowEffect.enabled = false
+            snowCover.enabled = false
+
+            timer = setInterval(() => {
+                if (u_toSummer < 0.6) {
+                    rainEffect.size += 1
+                    u_toSummer += 0.01
+                    treeShader.setUniform("u_toSummer", u_toSummer)
+                } else {
+                    clearInterval(timer)
+                }
+
+            }, 100)
+        }
+
+        map.graphicLayer.addGraphic(tree)
+        map.graphicLayer.addGraphic(tree2)
+        map.graphicLayer.addGraphic(tree3)
+
+        tree.readyPromise.then((layer) => {
+            document.getElementById("mask").style.display = "none"
+        })
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-mask {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: grid;
+            background-color: rgba(25, 25, 26, 0.6);
+        }
+
+        .loader {
+            margin: auto;
+
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #434343;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 118px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

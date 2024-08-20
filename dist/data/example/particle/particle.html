@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>动态粒子效果</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="mask" class="gemini-mask">
+        <div class="loader"></div>
+    </div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <div style="position: relative; display: flex; justify-content: space-around; top: 25px;">
+            <div class="gemini-buttom-light" onclick="openZm(2,3)">播放粒子效果</div>
+        </div>
+
+        <div style="position: relative; display: flex; justify-content: space-around; top: 65px;">
+            <div class="gemini-buttom-dark" onclick="closeZm(2,3)">停止粒子效果</div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+        let mapOptions = {
+            scene: {
+                center: { "lat": 36.486278, "lng": 116.956363, "alt": 174.2, "heading": 320, "pitch": -26.2 },
+                globe: {
+                    enableLighting: true,
+                    depthTestAgainstTerrain: true,
+                },
+                faxx: true,
+                shadows: true,
+                clock: {
+                    multiplier: 0.0,
+                    currentTime: "2023-08-08T10:00:00",
+                },
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: true
+            },
+            control: {
+                clockAnimate: true, // 时钟动画控制(左下角)
+                timeline: true, // 是否显示时间线控件
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+            ],
+            layers: [
+                {
+                    type: "geojson",
+                    name: "卧虎山水库（东）",
+                    url: "../data/file/wohushan.json",
+                    symbol: {
+                        type: "waterC",
+                        styleOptions: {
+                            // height: 119, // 水面高度
+                            normalMap: "../img/textures/waterNormals.jpg", // 水正常扰动的法线图
+                            frequency: 8000.0, // 控制波数的数字。
+                            animationSpeed: 0.02, // 控制水的动画速度的数字。
+                            amplitude: 5.0, // 控制水波振幅的数字。
+                            specularIntensity: 0.8, // 控制镜面反射强度的数字。
+                            baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
+                            blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
+                            opacity: 0.4, // 透明度
+                            clampToGround: true // 是否贴地
+                        }
+                    },
+                    show: true
+                },
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.viewer.shadowMap.softShadows = true
+        map.viewer.shadowMap.maximumDistance = 300
+        map.viewer.shadowMap.darkness = 0.2
+
+        const terrainFlat = new gemini.thing.TerrainFlat()
+        map.addThing(terrainFlat)
+
+        terrainFlat.addArea(
+            [[116.948576, 36.484784, 166.3], [116.960243, 36.484784, 166.3], [116.960243, 36.489321, 166.3], [116.948576, 36.489321, 166.3]],
+            { height: 60 }
+        )
+
+        // 镜面反射
+        const reflectionWater = new gemini.graphic.ReflectionWater({
+            positions: [
+                [116.954809, 36.48704, 107.1],
+                [116.955521, 36.486576, 107.2],
+                [116.956111, 36.487273, 108.4],
+                [116.955281, 36.487615, 106.8]
+            ],
+            style: {
+                normalMap: "../img/textures/waterNormals.jpg", // 水正常扰动的法线图
+                ripple: 100,
+                color: "#006ab4",
+                reflectivity: 0.6
+            }
+        })
+        map.graphicLayer.addGraphic(reflectionWater)
+
+        // 水库模型
+        const shuiku = new gemini.graphic.ModelEntity({
+            name: "卧虎山水库",
+            position: [116.955016, 36.487154, 120.8],
+            style: {
+                url: "../data/file/gltf/Wohushan.glb",
+                heading: -233.69
+            }
+        })
+        shuiku.readyPromise.then(function (layer) {
+            console.log("load完成", layer)
+            document.getElementById("mask").style.display = "none"
+        })
+        map.graphicLayer.addGraphic(shuiku)
+
+        // 闸门的控制
+        const zhamen = new gemini.graphic.ModelEntity({
+            name: "水库闸门",
+            position: [116.955016, 36.487154, 120.8],
+            style: {
+                url: "../data/file/gltf/Wohushan_zhamen.glb",
+                heading: -233.69
+            }
+        })
+        map.graphicLayer.addGraphic(zhamen)
+
+        var timeInv
+        // 高度更新
+        function updateHeight(height) {
+            zhamen.height = 16 + height // 阀门高度
+        }
+
+        // 水柱粒子位置
+        const posArr = [
+            [116.954973, 36.48700, 103],
+            [116.955058, 36.487122, 103],
+            [116.955141, 36.48724, 103],
+            [116.955235, 36.487364, 103],
+            [116.955326, 36.487479, 103],
+        ]
+
+        let particleLayer
+
+        // 添加水柱
+        function addWaterGate() {
+            particleLayer = new gemini.layer.GraphicLayer()
+            map.addLayer(particleLayer)
+
+            for (var i = 0, len = posArr.length; i < len; i++) {
+                const pos = posArr[i]
+
+                const particleSystem = new gemini.graphic.ParticleSystem({
+                    id: i + 1,
+                    position: pos, // 位置
+                    style: {
+                        image: "../img/textures/smoke.png",
+                        particleSize: 20, // 粒子大小（单位：像素）
+                        emissionRate: 100.0, // 发射速率 （单位：次/秒）
+                        heading: 200, // 方向角
+                        pitch: 55, // 俯仰角
+                        gravity: -11, // 重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
+                        transZ: 5, // 离地高度（单位：米）
+                        // maxHeight: 2000, // 超出该高度后不显示粒子效果
+
+                        startColor: Cesium.Color.LIGHTCYAN.withAlpha(0.3), // 开始颜色
+                        endColor: Cesium.Color.WHITE.withAlpha(0.0), // 结束颜色
+                        minimumParticleLife: 1, // 最小寿命时间（秒）
+                        maximumParticleLife: 4, // 最大寿命时间（秒）
+                        minimumSpeed: 10.0, // 最小速度(米/秒)
+                        maximumSpeed: 14.0 // 最大速度(米/秒)
+                    }
+                })
+                particleLayer.addGraphic(particleSystem)
+            }
+        }
+
+        function removeWaterGate() {
+            map.removeLayer(particleLayer)
+        }
+
+        /**
+         * 开启阀门
+         *
+         * @export
+         * @param {number} height  阀门高度  单位: m
+         * @param {number} time //时间 单位:s
+         * @returns {void} 无
+         */
+        function openZm(height, time) {
+            let thisHeight = 106.8 // 当前高度
+            let endHeight = height + 106.8 // 结束高度
+
+            let step = time / 0.1 // 步长
+            let stepHeight = (endHeight - thisHeight) / step // 每次阀门、水面上移高度
+
+            // 再次点击"开启"时从当前位置开启
+            updateHeight(thisHeight)
+
+            clearInterval(timeInv)
+            timeInv = setInterval(() => {
+                thisHeight += stepHeight // 上移后的当前高度,相当于时实更新
+
+                if (thisHeight >= endHeight) {
+                    thisHeight = endHeight
+                    clearInterval(timeInv) // 清除定时器,当前阀门的高度值等于结束时阀门的高度值时，停止上移，关闭定时器
+                }
+                updateHeight(thisHeight)
+            }, 100)
+            addWaterGate()
+
+        }
+
+        /**
+         * 关闭阀门
+         *
+         * @export
+         * @param {number} height  阀门高度 单位: m
+         * @param {number} time //时间 单位:s
+         * @returns {void} 无
+         */
+        function closeZm(height, time) {
+            let thisHeight = height + 106.8
+            let endHeight = 106.8
+
+            let step = time / 0.1
+            let stepHeight = (endHeight - thisHeight) / step
+
+            updateHeight(thisHeight)
+
+            clearInterval(timeInv)
+            timeInv = setInterval(() => {
+                thisHeight += stepHeight
+
+                if (thisHeight <= endHeight) {
+                    thisHeight = endHeight
+                    clearInterval(timeInv)
+                }
+                updateHeight(thisHeight)
+            }, 100)
+
+            removeWaterGate()
+        }
+
+        function addModel() {
+            removeAll()
+            map.addLayer(tiles3dLayer)
+        }
+
+        // 清除
+        function removeAll() {
+            map.removeLayer(tiles3dLayer)
+        }
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-mask {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: grid;
+            background-color: rgba(25, 25, 26, 0.6);
+        }
+
+        .loader {
+            margin: auto;
+
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #434343;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 130px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

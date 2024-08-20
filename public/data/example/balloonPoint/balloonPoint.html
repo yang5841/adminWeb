@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>水球点DIV样式</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+    <script src="../../libs/jquery/jquery-3.6.0.min.js"></script>
+    <script src="../../libs/echarts/echarts.min.js"></script>
+    <script src="../../libs/echarts/echarts-liquidfill.min.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <!-- <div id="geminiToolbar" class="gemini-toolbar">
+       
+    </div> -->
+
+    <script type="text/javascript">
+
+        // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+        let mapOptions = {
+            scene: {
+                center: { "lat": 22.64428, "lng": 113.062141, "alt": 200.8, "heading": 5.9, "pitch": -31.1 }
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: true
+            },
+            basemaps: [
+            {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+      
+
+
+        let tiles3dLayer = new gemini.layer.TilesetLayer({
+            name: "深圳",
+            url: window.GLOBAL_CONFIG.dataSever + "/data/3dtiles/baoli/tileset.json",
+            position: {
+                alt: 4.3
+            },
+        //   maximumScreenSpaceError: 10
+            flyTo: false,
+        })
+        map.addLayer(tiles3dLayer)
+        
+        // 创建div数据图层
+        graphicLayer = new gemini.layer.GraphicLayer()
+        map.addLayer(graphicLayer)
+
+        // 添加矢量数据
+        addRandomGraphicByCount([113.061723,22.648081,47], { value: 0.55, color: "#fb980b" })
+        addRandomGraphicByCount([113.060974,22.64669,51.8], { value: 0.25, color: "#00ff00" })
+        addRandomGraphicByCount([113.060171,22.647006,51.5], { value: 0.15, color: "#00ffff" })
+        addRandomGraphicByCount([113.062595,22.646894,102.8], { value: 0.11, color: "#ff0000" })
+      
+        function addRandomGraphicByCount(position, attr) {
+        let graphic = new gemini.graphic.DivGraphic({
+          position: position,
+          style: {
+            html: `<div style="width: 80px;height:80px;"></div>`,
+            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+          },
+          attr: attr
+        })
+        graphic.on(gemini.EventType.add, function (e) {
+          let dom = e.target.container.firstChild
+          let attr = e.target.attr
+      
+          let liquidfillchartChart = echarts.init(dom)
+      
+          // 参考API：https://github.com/ecomfe/echarts-liquidfill
+          // 参考示例：https://www.makeapie.com/explore.html#tags=liquidFill~sort=rank~timeframe=all~author=all
+          let option = {
+            series: [
+              {
+                type: "liquidFill",
+                radius: "100%",
+                outline: { show: false },
+                color: [attr.color],
+                data: [attr.value],
+                label: {
+                  color: "#294D99",
+                  insideColor: "#fff",
+                  fontSize: 26,
+                  fontWeight: "bold"
+                }
+              }
+            ]
+          }
+          liquidfillchartChart.setOption(option)
+        })
+        graphicLayer.addGraphic(graphic)
+      }
+       
+    </script>
+    <script type="text/javascript">
+        "use script" //开发环境建议开启严格模式
+       
+      </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 118px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+            border: none;
+            margin: 20px;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

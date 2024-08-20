@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>地形坡度坡向分析</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <div style="position: relative; display: flex; justify-content: space-around; top: 25px;">
+            <div class="gemini-buttom-light" onclick="startDraw()">绘制分析区域</div>
+        </div>
+        <div style="position: relative; display: flex; justify-content: space-around; top: 45px;">
+            <div class="gemini-buttom-light" onclick="changeType(`elevation`)">显示分析高程</div>
+            <div class="gemini-buttom-light" onclick="changeType(`slope`)">显示分析坡度</div>
+            <div class="gemini-buttom-light" onclick="changeType(`aspect`)">显示分析坡向</div>
+        </div>
+        <div style="position: relative; display: flex; justify-content: space-around; top: 65px;">
+            <div class="gemini-buttom-dark" onclick="removeAll()">清除分析</div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+        let mapOptions = {
+            scene: {
+                // globe: {
+                //     depthTestAgainstTerrain: true,
+                //     showGroundAtmosphere: false,
+                // },
+                center: { "lat": 36.72746, "lng": 117.05195, "alt": 489.5, "heading": 85.7, "pitch": -24.6 }
+            },
+            // mouse: {
+            //     enabledMoveTarget: false,
+            // },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: true
+            },
+            control: {
+                clockAnimate: true, // 时钟动画控制(左下角)
+                timeline: true, // 是否显示时间线控件
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.postProcessStages.fxaa.enabled = true
+        map.scene.globe.enableLighting = true;
+        map.scene.fog.enabled = false;
+
+        map.scene.globe.dynamicAtmosphereLighting = true;
+        map.scene.globe.dynamicAtmosphereLightingFromSun = false;
+
+        // 坡度坡向
+        let slope = new gemini.thing.Slope({
+            arrow: {
+                scale: 0.3, // 箭头长度的比例（范围0.1-0.9）
+                color: Cesium.Color.YELLOW,
+                width: 15, // 箭头宽度
+                show: true
+            },
+            tooltip: function (event) {
+                var attr = event.graphic?.attr
+                return `此次坡度为: ${attr.slopeStr1}  (${attr.slopeStr2})<br />坡向为: ${attr.direction}°`
+            }
+        })
+        map.addThing(slope)
+
+        slope.on(gemini.EventType.end, function (event) {
+            console.log("分析完成", event)
+            console.log("返回分析结果", event.data)
+        })
+
+        let contourLine = new gemini.thing.ContourLine({
+            contourShow: false, // 是否显示等高线
+            shadingType: "none", // 地表渲染效果类型:无nono, 高程 elevation, 坡度slope, 坡向aspect
+            shadingAlpha: 0.6 /// 地表渲染的透明度
+        })
+        map.addThing(contourLine)
+
+        // 绘制多边形
+        function startDraw() {
+            map.graphicLayer.clear()
+            map.graphicLayer.startDraw({
+                type: "polygon",
+                style: {
+                    color: "#007be6",
+                    opacity: 0.5
+                },
+                success: function (graphic) {
+                    // 绘制成功后回调
+                    let positions = graphic.positionsShow
+                    map.graphicLayer.clear()
+
+                    console.log("绘制坐标为", JSON.stringify(gemini.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+
+                    contourLine.positions = positions
+                    slope.add(positions, {
+                        splitNum: 12, // splitNum插值分割的个数
+                        radius: 1, // 缓冲半径（影响坡度坡向的精度）
+                        count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
+                    })
+                }
+            })
+        }
+        // 清除
+        function removeAll() {
+            contourLine.clear()
+            slope.clear()
+            changeType(`none`)
+        }
+
+        function changeType(val) {
+            contourLine.shadingType = val
+        }
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 98px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

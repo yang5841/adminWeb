@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>描边效果</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+
+    <script type="text/javascript">
+
+        // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+        let mapOptions = {
+            scene: {
+                center: { "lat": 39.906531, "lng": 116.392423, "alt": 65.1, "heading": 341.5, "pitch": -20.8 },
+                globe: {
+                    baseColor: "#2b2b2b",
+                    enableLighting: false,
+                    show: false
+                },
+                showSkyAtmosphere: false, // 关闭Cesium自带大气
+                faxx: true,
+                backgroundColor: "#2b2b2b",
+                showSun: false,
+                showMoon: false,
+                showSkyBox: false,
+                fxaa: true,
+                shadows: false,
+                fog: false,
+            },
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.logarithmicDepthBuffer = true
+
+        // 文字描述
+        const label1 = new gemini.graphic.WallEntity({
+            positions: [
+                [116.392312, 39.906818, 52.1],
+                [116.392415, 39.906817, 52.1]
+            ],
+            style: {
+                diffHeight: 2.6,
+                materialType: gemini.MaterialType.Text,
+                materialOptions: {
+                    text: "第20分区管廊",
+                    font_family: "黑体",
+                    color: "#ffffff",
+                    strokeWidth: 6,
+                    stroke: true,
+                    strokeColor: new Cesium.Color(0.0, 1.0, 0.0, 1.0),
+                }
+            },
+        })
+
+        const label2 = new gemini.graphic.WallEntity({
+            positions: [
+                [116.392314, 39.906809, 47.1],
+                [116.392383, 39.906807, 47.1]
+            ],
+            style: {
+                diffHeight: 2.5,
+                materialType: gemini.MaterialType.Text,
+                materialOptions: {
+                    text: "污水舱",
+                    font_family: "黑体",
+                    color: "#ffff00",
+                    strokeWidth: 6,
+                    stroke: true,
+                    strokeColor: new Cesium.Color(0.0, 1.0, 0.0, 1.0),
+                }
+            },
+        })
+
+        map.graphicLayer.addGraphic(label1)
+        map.graphicLayer.addGraphic(label2)
+
+        // 地下管网较完整模型(3dtiles格式)
+        const center = new Cesium.Cartesian3(
+            // 管廊最低点
+            -2177714.2, 4388786.5, 4070092.9
+        );
+        const modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(center);
+        Cesium.Matrix4.inverse(modelMatrix, modelMatrix);
+
+        // 管线模型(3dtiles格式)
+        const langxian20 = new gemini.layer.TilesetLayer({
+            id: "langxian20",
+            url: window.GLOBAL_CONFIG.dataSever + "/data/3dtiles/langxian20/tileset.json",
+            flyTo: false,
+            show: true,
+            position: {
+                alt: 50
+            },
+            allowDrillPick: true,
+            backFaceCulling: true,
+            customShader: new Cesium.CustomShader({
+                uniforms: {
+                    u_matrix: {
+                        type: Cesium.UniformType.MAT4,
+                        value: modelMatrix,
+                    },
+                },
+                lightingModel: Cesium.LightingModel.UNLIT,
+                translucencyMode: Cesium.CustomShaderTranslucencyMode.TRANSLUCENT,
+                fragmentShaderText: `
+    void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
+    {
+        vec3 worldENU = (u_matrix * vec4(fsInput.attributes.positionWC, 1.0)).xyz; 
+        vec3 color1 = vec3(0.0, 0.376, 0.956);
+        // vec3 color2 = vec3(0.956, 0.376, 0.0);
+        vec3 color2 = vec3(0.0, 0.0, 1.0);
+        float weight = worldENU.z / 20.0;
+
+        material.diffuse = mix(color1, color2, weight);
+
+        material.emissive = vec3(1.0, 1.0, 1.0);
+        vec3 normalEC = normalize(fsInput.attributes.normalEC);
+        vec3 eye = vec3(0.0, 0.0, 1.0);
+        float frenel = dot(normalEC, eye);
+        material.alpha = (1.0 - abs(frenel)) * 0.3;
+
+    } `
+            }),
+        });
+
+        // 管廊25号分段部件(3dtiles格式)
+        const shebei20 = new gemini.layer.TilesetLayer({
+            id: "shebei20",
+            url: window.GLOBAL_CONFIG.dataSever + "/data/3dtiles/shebei20/tileset.json",
+            flyTo: false,
+            show: true,
+            position: {
+                alt: 50.0
+            },
+            backFaceCulling: false,
+            customShader: new Cesium.CustomShader({
+                uniforms: {
+                },
+                lightingModel: Cesium.LightingModel.UNLIT,
+                translucencyMode: Cesium.CustomShaderTranslucencyMode.TRANSLUCENT,
+                fragmentShaderText: `
+    void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
+    {
+        vec3 color1 = material.diffuse;
+        vec3 color2 = vec3(0.194, 0.297, 0.484);
+        vec3 glowColor = vec3(0.48, 0.519, 0.703);
+        material.diffuse = mix(color1, color2, 0.5); 
+        material.emissive = mix(color1, glowColor, 0.5) * 1.5;
+        material.specular = vec3(0.5);
+        material.roughness = 0.5;
+
+    } `
+            }),
+        });
+
+        // 3dtiles模型加载入场景
+        map.addLayer(langxian20)
+        map.addLayer(shebei20)
+
+        let outlineEffect = new gemini.effect.OutlineEffect({
+            color: "#0060F4FF",
+            width: 6,
+            eventType: false,
+            glow: false
+        })
+        map.addEffect(outlineEffect)
+
+        langxian20.readyPromise.then(function (e) {
+            addTileToTargetEffect(langxian20, outlineEffect)
+        })
+
+        shebei20.readyPromise.then(function (e) {
+            addTileToTargetEffect(shebei20, outlineEffect)
+        })
+
+        let listGL = []
+        let listSB = []
+        let listFJ = []
+
+        // 从模型读取指定构件 加到 特效
+        function addTileToTargetEffect(tiles3dLayer, effect) {
+            tiles3dLayer.tileset.tileLoad.addEventListener(function (tile) {
+                processTileFeatures(tile, function (feature) {
+                    let attr = gemini.Util.get3DTileFeatureAttr(feature) // 取属性
+
+                    if (tiles3dLayer.id == "langxian20") {
+                        // 自定义需要高亮的廊体编号
+                        listGL.push(feature.pickId)
+
+                    }
+
+                    if (tiles3dLayer.id == "shebei20") {
+                        // 自定义需要高亮的设备
+                        listSB.push(feature.pickId)
+                    }
+
+                    // 根据条件判断，将feature记录
+                    effect.selected = [...listGL, ...listSB, ...listFJ]
+                })
+            })
+        }
+
+        // 遍历瓦片内容
+        function processContentFeatures(content, callback) {
+            let featuresLength = content.featuresLength
+            for (let i = 0; i < featuresLength; ++i) {
+                let feature = content.getFeature(i)
+                callback(feature)
+            }
+        }
+
+        // 遍历瓦片
+        function processTileFeatures(tile, callback) {
+            let content = tile.content
+            let innerContents = content.innerContents
+            if (Cesium.defined(innerContents)) {
+                let length = innerContents.length
+                for (let i = 0; i < length; ++i) {
+                    processContentFeatures(innerContents[i], callback)
+                }
+            } else {
+                processContentFeatures(content, callback)
+            }
+        }
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 130px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

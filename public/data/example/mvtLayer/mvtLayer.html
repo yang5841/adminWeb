@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>矢量切片地图(MVT)</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/ol/ol.js"></script>
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/jquery/jquery-3.6.0.min.js"></script>
+
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <table class="gemini-table">
+            <tr>
+                <td>
+                    <label> 土地利用(面) </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="color" id="greenColor" onchange="changeStyle(`greenColor`, `color`)" value="#bbd78d"
+                        style="width:40px;">
+                    <label> 绿地颜色 </label>
+                </td>
+                <td>
+                    <input type="color" id="buildColor" onchange="changeStyle(`buildColor`, `color`)" value="#e7ded0"
+                        style="width:40px;">
+                    <label> 建筑用地颜色 </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="color" id="waterColor" onchange="changeStyle(`waterColor`, `color`)" value="#abc6ef"
+                        style="width:40px;">
+                    <label> 水体颜色 </label>
+                </td>
+                <td>
+                    <input type="color" id="schoolColor" onchange="changeStyle(`schoolColor`, `color`)" value="#febebe"
+                        style="width:40px;">
+                    <label> 教育用地颜色 </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label> 道路(线) </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="color" id="road1Color" onchange="changeStyle(`road1Color`, `color`)" value="#feeb82"
+                        style="width:40px;">
+                    <label> 浅色公路 </label>
+                </td>
+                <td>
+                    <input type="color" id="road2Color" onchange="changeStyle(`road2Color`, `color`)" value="#fecd6e"
+                        style="width:40px;">
+                    <label> 深色公路 </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="color" id="road3Color" onchange="changeStyle(`road3Color`, `color`)" value="#fefefe"
+                        style="width:40px;">
+                    <label> 白色公路 </label>
+                </td>
+                <td>
+                    <input type="color" id="road4Color" onchange="changeStyle(`road4Color`, `color`)" value="#ba92f1"
+                        style="width:40px;">
+                    <label> 紫色公路 </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="color" id="road5Color" onchange="changeStyle(`road5Color`, `color`)" value="#fff48c"
+                        style="width:40px;">
+                    <label> 浅黄公路 </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label> 3D建筑(三维) </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="extrudedHeight" type="checkbox" checked
+                        onclick="changeStyle(`extrudedHeight`, `extrudedHeight`)" />
+                    <label> 开启建筑三维 </label>
+                </td>
+                <td>
+                    <input id="flat" type="checkbox" onclick="changeStyle(`flat`, `bool`)" />
+                    <label> 关闭建筑光照 </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label> 地名地址(点) </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="number" id="packFontSize" onchange="changeStyle(`packFontSize`, `number`)" value="20"
+                        style="width:40px;">
+                    <label> 字体大小 </label>
+                </td>
+                <td>
+                    <input type="color" id="packFontColor" onchange="changeStyle(`packFontColor`, `color`)"
+                        value="#b06237" style="width:40px;">
+                    <label> 字体颜色 </label>
+                </td>
+            </tr>
+        </table>
+        <div style="position: relative; display: flex; justify-content: space-around; top: 25px;">
+            <div class="gemini-buttom-light" onclick="addMVT()">矢量切片地图服务</div>
+            <div class="gemini-buttom-dark" onclick="delMVT()">移除所有地图</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        let mapOptions = {
+            scene: {
+                globe: {
+                    baseColor: "#f5f4ee",
+                    depthTestAgainstTerrain: false
+                },
+                fxaa: true,
+                msaaSamples: 4,
+                scene3DOnly: true,
+                requestRenderMode: true, // 开启显式渲染
+                center: { "lat": 30.245244, "lng": 120.152863, "alt": 5615.1, "heading": 0.3, "pitch": -89.5 }
+            },
+            mouse: {
+                enabledMoveTarget: false,
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: false
+            },
+            control: {
+                // baseLayerPicker: true,
+                // timeline: { zoom: true, enabled: true }, // 方式1：options中添加控件 ; zoom - 禁止缩放
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: false,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+                    show: false,
+                },
+            ],
+            layers: [
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.postProcessStages.fxaa.enabled = true
+        map.scene.globe.enableLighting = true;
+        map.scene.fog.enabled = false;
+
+        map.scene.globe.dynamicAtmosphereLighting = true;
+        map.scene.globe.dynamicAtmosphereLightingFromSun = false;
+
+        const ellipsoidProvider = new Cesium.EllipsoidTerrainProvider({
+            tilingScheme: new Cesium.WebMercatorTilingScheme({
+                ellipsoid: map.scene.globe.ellipsoid,
+            }),
+        });
+        // map.viewer.terrainProvider = ellipsoidProvider;
+
+
+        let options = {
+            greenColor: new Cesium.Color.fromCssColorString(`#bbd78d`),
+            waterColor: new Cesium.Color.fromCssColorString(`#abc6ef`),
+            buildColor: new Cesium.Color.fromCssColorString(`#e7ded0`),
+            schoolColor: new Cesium.Color.fromCssColorString(`#febebe`),
+            road1Color: new Cesium.Color.fromCssColorString(`#feeb82`),
+            road2Color: new Cesium.Color.fromCssColorString(`#fecd6e`),
+            road3Color: new Cesium.Color.fromCssColorString(`#fefefe`),
+            road4Color: new Cesium.Color.fromCssColorString(`#ba92f1`),
+            road5Color: new Cesium.Color.fromCssColorString(`#fff48c`),
+            extrudedHeight: `h`,
+            flat: false,
+            packFontSize: 20,
+            packFontColor: new Cesium.Color.fromCssColorString(`#b06237`),
+        }
+
+        function styleFnTdt(feature, zoom) {
+            let style = {
+                type: Cesium.Material.ColorType,
+                id: "0",
+                show: false,
+                color: Cesium.Color.RED
+            }
+
+            const id = feature.properties_.id
+            const layer = feature.properties_.layer
+            const styleId = feature.properties_.styleId
+            const name = feature.properties_.name
+
+            const geom = feature.getGeometry().getType()
+
+            // 道路线样式
+            if (layer === "4v") {
+                // 浅色公路样式
+                if (feature.properties_["zb"] === "2Pnrkmv") {
+                    // console.log("feature.properties_", feature.properties_)
+                    style = {
+                        type: Cesium.Material.PolylineOutlineType,
+                        id: "xw",
+                        show: true,
+                        // color: new Cesium.Color(254 / 255, 235 / 255, 130 / 255),
+                        color: options.road1Color,
+                        outline: true,
+                        outlineColor: new Cesium.Color(226 / 255, 205 / 255, 140 / 255),
+                        outlineWidth: 2,
+                        width: zoom > 12 ? 8 : 4, //TODO 宽度应随着Zoom变化
+                        height: 12
+                    }
+                }
+                // 深色公路样式
+                else if (feature.properties_["zb"] === "wm1Wwa6" || feature.properties_["zb"] === "2PnB1lq" || feature.properties_["zb"] === "2ro78ml" || feature.properties_["zb"] === "2roGK0M") {
+                    style = {
+                        id: "MDO-oog-A9x",
+                        type: Cesium.Material.PolylineOutlineType,
+                        show: true,
+                        // color: new Cesium.Color(254 / 255, 205 / 255, 110 / 255),
+                        color: options.road2Color,
+                        outline: true,
+                        outlineColor: new Cesium.Color(226 / 255, 205 / 255, 140 / 255),
+                        outlineWidth: 2,
+                        width: zoom > 12 ? 8 : 4,
+                        height: 14
+                    }
+
+                }
+                // 白色公路样式
+                else if (feature.properties_["zb"] === "2PnPKR5") {
+                    style = {
+                        id: "QV",
+                        type: Cesium.Material.PolylineOutlineType,
+                        show: true,
+                        // color: new Cesium.Color(254 / 255, 254 / 255, 254 / 255),
+                        color: options.road3Color,
+                        outline: true,
+                        outlineColor: new Cesium.Color(226 / 255, 205 / 255, 140 / 255),
+                        outlineWidth: 2,
+                        width: zoom > 12 ? 8 : 4,
+                        height: 11
+                    }
+
+                }
+                // 紫色公路样式
+                else if (feature.properties_["zb"] === "2r0xo79" || feature.properties_["zb"] === "2rorYgG" || feature.properties_["zb"] === "2ro78MM" || feature.properties_["zb"] === "2rvn4aq" || feature.properties_["zb"] === "2rorQwl" || feature.properties_["zb"] === "2rvnj3N") {
+                    style = {
+                        id: "NKr-lPx-kKR",
+                        type: Cesium.Material.PolylineOutlineType,
+                        show: true,
+                        // color: new Cesium.Color(186 / 255, 146 / 255, 241 / 255),
+                        color: options.road4Color,
+                        outline: true,
+                        outlineColor: new Cesium.Color(226 / 255, 205 / 255, 140 / 255),
+                        outlineWidth: 2,
+                        width: zoom > 12 ? 8 : 4,
+                        height: 15
+                    }
+
+                }
+                // 浅黄色公路样式
+                else if (feature.properties_["zb"] === "2rvDDMq" || feature.properties_["zb"] === "2Pnr80j") {
+                    style = {
+                        id: "WG",
+                        type: Cesium.Material.PolylineOutlineType,
+                        show: true,
+                        // color: new Cesium.Color(255 / 255, 244 / 255, 140 / 255),
+                        color: options.road5Color,
+                        outline: true,
+                        outlineColor: new Cesium.Color(226 / 255, 205 / 255, 140 / 255),
+                        outlineWidth: 2,
+                        width: zoom > 12 ? 8 : 4,
+                        height: 13
+                    }
+
+                }
+            }
+            // 铁路线样式
+            else if (layer === "7Y") {
+                // 高铁样式
+                if (feature.properties_["9m"] === "w4XjAXl") {
+                    style = {
+                        id: "7MY",
+                        type: Cesium.Material.PolylineDashType,
+                        show: true,
+                        color: new Cesium.Color(170 / 255, 170 / 255, 170 / 255),
+                        gapColor: Cesium.Color.WHITE,
+                        dashLength: 40, // dash长度
+                        dashPattern: parseInt("1111111100000000", 2), // dash模板
+                        width: 2, //TODO 宽度应随着Zoom变化
+                    }
+                }
+                // 普铁样式
+                else if (feature.properties_["9m"] === "w4X9NWl") {
+                    style = {
+                        id: "XeY",
+                        type: Cesium.Material.PolylineDashType,
+                        show: true,
+                        color: new Cesium.Color(170 / 255, 170 / 255, 170 / 255),
+                        gapColor: Cesium.Color.WHITE,
+                        dashLength: 40, // dash长度
+                        dashPattern: parseInt("1111111100000000", 2), // dash模板
+                        width: 2, //TODO 宽度应随着Zoom变化
+                    }
+                }
+
+            }
+            // 县、街道边界线样式
+            else if (layer === "we") {
+                style = {
+                    id: "we",
+                    type: Cesium.Material.PolylineDashType,
+                    show: true,
+                    color: new Cesium.Color(170 / 255, 170 / 255, 170 / 255),
+                    // gapColor: Cesium.Color.WHITE,
+                    dashPattern: parseInt("1111110011100111", 2),
+                }
+
+            }
+            // 水体面样式
+            else if (layer === "og") {
+                if (feature.properties_["9m"] === "9DMbOem") {
+                } else if (feature.properties_["9m"] === "9DXPy7G") {
+                } else {
+                    style = {
+                        id: "og",
+                        type: Cesium.Material.ColorType,
+                        show: true,
+                        // color: new Cesium.Color(171 / 255, 198 / 255, 239 / 255)
+                        afterLine: true,
+                        height: 0.5,
+                        color: options.waterColor
+                    }
+                }
+            }
+            // 绿地面样式
+            else if (layer === "kR" && zoom >= 7) {
+                style = {
+                    id: "kR",
+                    type: Cesium.Material.ColorType,
+                    show: true,
+                    afterLine: true,
+                    height: 0.5,
+                    // color: new Cesium.Color(187 / 255, 215 / 255, 141 / 255)
+                    color: options.greenColor
+                }
+            }
+            // 建筑面样式
+            else if (layer === "8R" && zoom >= 9) {
+                // 默认样式
+                style = {
+                    id: "lx",
+                    type: Cesium.Material.ColorType,
+                    show: true,
+                    // color: new Cesium.Color(231 / 255, 222 / 255, 208 / 255),
+                    color: options.buildColor,
+                    // extrudedHeight: "h", // feature.properties_的h参数内容表示extrudedHeight
+                    extrudedHeight: options.extrudedHeight, // feature.properties_的h参数内容表示extrudedHeight
+                    // flat: false, // 是否受光照影响
+                    flat: options.flat, // 是否受光照影响
+                }
+                // 学校
+                if (feature.properties_["9m"] === "9lOXxJm" || feature.properties_["9m"] === "9lObNbX") {
+                    style.id = "lx-9lOXxJm-9lObNbX"
+                    // style.color = new Cesium.Color(254 / 255, 190 / 255, 190 / 255)
+                    style.color = options.schoolColor
+                    style.flat = true
+                }
+            }
+            // 点样式
+            else if (layer === "Nr") {
+                // console.log("点", feature.properties_)
+                // 公园
+                if (feature.properties_["stylename"] === "公园'" && zoom > feature.properties_["z"]) {
+                    style = {
+                        id: "180303",
+                        show: true,
+                        text: "name", // name字段表示文本内容
+                        // font_size: 20,
+                        font_size: options.packFontSize,
+                        font_family: "楷体",
+                        // color: new Cesium.Color(176 / 255, 98 / 255, 55 / 255, 1),
+                        color: options.packFontColor,
+                        billOffsetX: -10,
+                        billOffsetY: -7,
+                        outline: true,
+                        outlineColor: "#FF0000",
+                        outlineWidth: 2,
+                        image: "../img/style/park.png"
+                    }
+                }
+                else if (feature.properties_["stylename"] === "房产小区" && zoom > feature.properties_["z"]) {
+                    style = {
+                        id: "120101",
+                        show: true,
+                        text: "name", // name字段表示文本内容
+                        font_size: 20,
+                        font_family: "楷体",
+                        color: new Cesium.Color(176 / 255, 98 / 255, 55 / 255, 1),
+                        billOffsetX: -10,
+                        billOffsetY: -7,
+                        outline: true,
+                        outlineColor: "#FF0000",
+                        outlineWidth: 2,
+                        image: "../img/style/streets.png"
+                    }
+                }
+                else if (feature.properties_["stylename"] === "学校" && zoom > feature.properties_["z"]) {
+                    style = {
+                        id: "793",
+                        show: true,
+                        text: "name", // name字段表示文本内容
+                        font_size: 20,
+                        font_family: "楷体",
+                        color: new Cesium.Color(176 / 255, 98 / 255, 55 / 255, 1),
+                        billOffsetX: -10,
+                        billOffsetY: -7,
+                        outline: true,
+                        outlineColor: "#FF0000",
+                        outlineWidth: 2,
+                        image: "../img/style/school.png"
+                    }
+                }
+                else if (feature.properties_["stylename"] === "大楼大厦" && zoom > feature.properties_["z"]) {
+                    style = {
+                        id: "200101",
+                        show: true,
+                        text: "name", // name字段表示文本内容
+                        font_size: 20,
+                        font_family: "楷体",
+                        color: new Cesium.Color(176 / 255, 98 / 255, 55 / 255, 1),
+                        billOffsetX: -10,
+                        billOffsetY: -7,
+                        outline: true,
+                        outlineColor: "#FF0000",
+                        outlineWidth: 2,
+                        image: "../img/style/build.png"
+                    }
+                }
+            }
+            return style
+        }
+
+        function changeStyle(layer, type) {
+            if (type === `color`) {
+                let value = $('#' + layer).val()
+                options[layer] = new Cesium.Color.fromCssColorString(value)
+            }
+            else if (type === `bool`) {
+                let value = $('#' + layer).prop("checked")
+                options[layer] = value
+            }
+            else if (type === `extrudedHeight`) {
+                let value = $('#' + layer).prop("checked")
+                options[layer] = value ? `h` : null
+            }
+            else if (type === `number`) {
+                let value = $('#' + layer).val()
+                options[layer] = Number(value)
+            }
+            console.log("当前样式", options)
+            mvtlayer.styleFn = styleFnTdt
+        }
+
+        let outlineEffect = new gemini.effect.OutlineEffect({
+            color: Cesium.Color.RED
+        })
+
+        map.addEffect(outlineEffect)
+
+        // map.on(gemini.EventType.click, function (event) {
+        //     // console.log('单击了地图对象', event)
+        //     console.log(outlineEffect.selected)
+        // })
+
+        let mvtlayer
+        function delMVT() {
+            map.removeThing(mvtlayer)
+            map.graphicLayer.clear()
+        }
+
+        function addMVT() {
+            delMVT()
+            mvtlayer = new gemini.thing.MvtLayer2({
+                tdt: true,
+                url: [
+                    `https://zhejiang.tianditu.gov.cn/vtiles/maps/tdt_zj_zw/{zoom}/{x}/{y}.mvt?v=2023`,
+                ],
+                styleFn: styleFnTdt,
+            })
+
+            map.addThing(mvtlayer)
+        }
+
+        function styleFnTest(feature, zoom) {
+            let style = {
+                type: Cesium.Material.ColorType,
+                id: "1",
+                show: true,
+                color: Cesium.Color.RED
+            }
+            return style
+        }
+
+        addMVT()
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 305px;
+            height: 458px;
+            right: 20px;
+            bottom: 20px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 118px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+
+        .gemini-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .gemini-table tr td {
+            padding: 5px 10px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .gemini-table tr td:first-child {
+            border-left: none;
+        }
+
+        .gemini-table .nametd {
+            padding: 5px 20px 5px 10px;
+        }
+    </style>
+
+</body>
+
+</html>

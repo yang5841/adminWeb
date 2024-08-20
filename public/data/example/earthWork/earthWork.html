@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>填挖方分析</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <div style="position: relative; display: flex; justify-content: space-around; top: 25px;">
+            <div class="gemini-buttom-light" onclick="startDraw()">绘制填挖方区域</div>
+        </div>
+
+        <div style="position: relative; display: flex; justify-content: space-around; top: 65px;">
+            <div class="gemini-buttom-dark" onclick="removeAll()">清除分析</div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        
+        let mapOptions = {
+            scene: {
+                globe: {
+                    depthTestAgainstTerrain: true,
+                    showGroundAtmosphere: false,
+                },
+                center: { "lat": 51.048508, "lng": 13.737405, "alt": 393.2, "heading": 15.4, "pitch": -33.1 }
+            },
+            mouse: {
+                enabledMoveTarget: false,
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: true
+            },
+            control: {
+                // baseLayerPicker: true,
+                // timeline: { zoom: true, enabled: true }, // 方式1：options中添加控件 ; zoom - 禁止缩放
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.postProcessStages.fxaa.enabled = true
+        map.scene.globe.enableLighting = true;
+        map.scene.fog.enabled = false;
+
+        map.scene.globe.dynamicAtmosphereLighting = true;
+        map.scene.globe.dynamicAtmosphereLightingFromSun = false;
+
+        let tiles3dLayer = new gemini.layer.TilesetLayer({
+            // name: "东至县城",
+            name: "德国",
+            // url: window.GLOBAL_CONFIG.dataSever + "/data/dz/3dtiles/3dtiles-cesium/tileset.json",
+            url: window.GLOBAL_CONFIG.dataSever + "/data/3dtiles/german/tileset.json",
+            maximumScreenSpaceError: 35,
+            skipLevelOfDetail: true,
+            preferLeaves: true,
+            position: {
+                alt_offset: 200
+            },
+
+            flyTo: false,
+        })
+        map.addLayer(tiles3dLayer)
+
+        const measure = new gemini.thing.Measure({
+            label: {
+                color: "#ffffff",
+                font_family: "MicrosoftYaHei",
+                font_size: 20,
+                background: false
+            }
+        })
+        map.addThing(measure)
+
+        measure.on(gemini.EventType.start, function (e) {
+            console.log("开始异步分析", e)
+        })
+        measure.on(gemini.EventType.end, function (e) {
+            console.log("完成异步分析", e)
+        })
+
+        let measureVolume
+
+        function startDraw() {
+            // 开始绘制
+            measure
+                .volume({
+                    has3dtiles: true,
+                    splitNum: 12,
+                    // minHeight: 50 , //可以设置一个固定的最低高度
+                    exact: true // 是否进行精确计算
+                })
+                .then((e) => {
+                    measureVolume = e
+                    showInterResult(measureVolume.interPolygonObj.list)
+                })
+        }
+        // 清除所有测量
+        function removeAll() {
+            measure.clear()
+            clearInterResult()
+        }
+
+        // 显示面的插值计算结果，方便比较分析
+        var interGraphicLayer
+
+        function clearInterResult() {
+            if (!interGraphicLayer) {
+                interGraphicLayer = new gemini.layer.GraphicLayer()
+                map.addLayer(interGraphicLayer)
+            }
+
+            interGraphicLayer.clear()
+        }
+
+        function showInterResult(list) {
+            // 分析结果用于测试分析的，不做太多处理，直接清除之前的，只保留一个
+            clearInterResult()
+
+            var pt1, pt2, pt3
+            // var geometryInstances = [];
+            for (var i = 0, len = list.length; i < len; i++) {
+                var item = list[i]
+
+                pt1 = item.point1.pointDM
+                pt2 = item.point2.pointDM
+                pt3 = item.point3.pointDM
+
+                // 点
+                for (var pt of [item.point1, item.point2, item.point3]) {
+                    var graphic = new gemini.graphic.PointPrimitive({
+                        position: pt.pointDM,
+                        style: {
+                            pixelSize: 9,
+                            color: Cesium.Color.fromCssColorString("#ff0000").withAlpha(0.5)
+                        }
+                    })
+                    interGraphicLayer.addGraphic(graphic)
+
+                    graphic.bindTooltip("点高度:" + gemini.MeasureUtil.formatDistance(pt.height))
+                }
+
+                // 横截面面积
+                item.area = item.area || gemini.MeasureUtil.getTriangleArea(pt1, pt2, pt3)
+
+                // 三角网及边线
+                var positions = [pt1, pt2, pt3, pt1]
+
+                // 三角网面（单击用）
+                var primitivePoly = new gemini.graphic.PolygonPrimitive({
+                    positions: positions,
+                    style: {
+                        color: Cesium.Color.fromCssColorString("#ffffff").withAlpha(0.01)
+                    }
+                })
+                interGraphicLayer.addGraphic(primitivePoly)
+                primitivePoly.bindTooltip("三角面积:" + gemini.MeasureUtil.formatArea(item.area) + "(第" + i + "个)")
+
+                // 三角网边线
+                var primitiveLine = new gemini.graphic.PolylinePrimitive({
+                    positions: positions,
+                    style: {
+                        width: 1,
+                        color: Cesium.Color.fromCssColorString("#ffff00").withAlpha(0.3)
+                    }
+                })
+                interGraphicLayer.addGraphic(primitiveLine)
+            }
+        }
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 20px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 118px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

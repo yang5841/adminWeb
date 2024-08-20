@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>创建地球</title>
+    <link href="/libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="/libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="/libs/style.css" rel="stylesheet" />
+    <script src="/libs/Cesium/Cesium.js"></script>
+    <script src="/libs/gemini/gemini.js"></script>
+    <script src="/libs/log/Sandcastle.js"></script>
+    <script src="/libs/log/log.js"></script>
+</head>
+
+<body>
+    <div id="geminiContainer" class="gemini-container"></div>
+    <script type="text/javascript">
+        let mapOptions = {
+            scene: {
+                globe: {
+                    depthTestAgainstTerrain: true,
+                    showGroundAtmosphere: false,
+                },
+                center: { lat: 30.054604, lng: 108.885436, alt: 17036414, heading: 0, pitch: -90 }
+            },
+            mouse: {
+                enabledMoveTarget: false,
+            },
+            terrain: {
+               
+            },
+            control: {
+                
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                }
+            ],
+            layers: [
+            ]
+        }
+        const map = new gemini.Map("geminiContainer", mapOptions)
+    </script>
+</body>
+</html>

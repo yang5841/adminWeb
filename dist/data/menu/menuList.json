@@ -1,0 +1,1625 @@
+{
+    "msg": "操作成功",
+    "code": 200,
+    "type": "menu",
+    "data": [
+        {
+            "name": "二维地图服务",
+            "hidden": false,
+            "index": "2",
+            "meta": {
+                "title": "二维地图服务",
+                "icon": "international",
+                "noCache": false,
+                "link": null
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "2-1",
+                    "id": "page_201",
+                    "meta": {
+                        "title": "天地图服务",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "天地图服务",
+                    "thumbnail": "tdt.png",
+                    "main": "/data/example/tdt/tdt",
+                    "details": "国家地理信息公共服务平台（天地图）提供的矢量地图、卫星影像地图等在线服务",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-13",
+                    "id": "page_213",
+                    "meta": {
+                        "title": "百度地图服务",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "百度地图服务",
+                    "thumbnail": "baidu.png",
+                    "main": "/data/example/baidu/baidu",
+                    "details": "百度地图服务提供的矢量地图、卫星影像地图、实时路况等在线瓦片服务，因为坐标纠偏原因，瓦片边缘对齐效果一般",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-12",
+                    "id": "page_212",
+                    "meta": {
+                        "title": "高德地图服务",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "高德地图服务",
+                    "thumbnail": "gaode.png",
+                    "main": "/data/example/gaode/gaode",
+                    "details": "高德地图服务提供的矢量地图、卫星影像地图等在线服务",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-11",
+                    "id": "page_211",
+                    "meta": {
+                        "title": "ArcGIS服务",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "ArcGIS服务",
+                    "thumbnail": "arcgis.png",
+                    "main": "/data/example/arcgis/arcgis",
+                    "details": "加载显示ArcGIS Server提供的REST地图服务",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-2",
+                    "id": "page_202",
+                    "meta": {
+                        "title": "矢量切片地图(MVT)",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "矢量切片地图(MVT)",
+                    "thumbnail": "mvtLayer.png",
+                    "main": "/data/example/mvtLayer/mvtLayer",
+                    "details": "Mapbox Vector Tile(MVT)是当前最为成熟的矢量切片地图方案，本示例演示浙江天地图提供的MVT资源",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-9",
+                    "id": "page_209",
+                    "meta": {
+                        "title": "矢量切片地图点选",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "矢量切片地图点选",
+                    "thumbnail": "mvtLayerPick.png",
+                    "main": "/data/example/mvtLayerPick/mvtLayerPick",
+                    "details": "得益于矢量切片地图的结构特点，点线面切片自带属性数据，不需要请求额外的接口",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-10",
+                    "id": "page_210",
+                    "meta": {
+                        "title": "矢量切片水面纹理",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "矢量切片水面纹理",
+                    "thumbnail": "mvtLayerWater.gif",
+                    "main": "/data/example/mvtLayerWater/mvtLayerWater",
+                    "details": "矢量切片地图支持动态水面纹理效果",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-11",
+                    "id": "page_211",
+                    "meta": {
+                        "title": "矢量切片要素统计",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "矢量切片要素统计",
+                    "thumbnail": "mvtLayerStats.png",
+                    "main": "/data/example/mvtLayerStats/mvtLayerStats",
+                    "details": "矢量切片地图支持实时统计瓦片要素数量",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-3",
+                    "id": "page_203",
+                    "meta": {
+                        "title": "网络地图服务(WMS)",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "网络地图服务(WMS)",
+                    "thumbnail": "wmsLayer.png",
+                    "main": "/data/example/wmsLayer/wmsLayer",
+                    "details": "Web Map Service(WMS)属于OGC标准的服务，WMS地图切片由服务器动态生成，地图样式可在服务器侧灵活配置",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-8",
+                    "id": "page_208",
+                    "meta": {
+                        "title": "WMS样式编辑",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "WMS样式编辑",
+                    "thumbnail": "wmsEdit.png",
+                    "main": "/data/example/wmsEdit/wmsEdit",
+                    "details": "Web Map Service(WMS)的GetMap方法中提供了SLD_BODY参数，允许用户对地图瓦片的样式进行动态编辑",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-4",
+                    "id": "page_204",
+                    "meta": {
+                        "title": "网络地图瓦片服务(WMTS)",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "网络地图瓦片服务(WMTS)",
+                    "thumbnail": "wmtsLayer.png",
+                    "main": "/data/example/wmtsLayer/wmtsLayer",
+                    "details": "Web Map Tile Service(WMTS)属于OGC标准的服务，WMTS地图切片由切片程序生成，样式不可编辑，但有效降低服务器压力",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-5",
+                    "id": "page_205",
+                    "meta": {
+                        "title": "网络要素服务(WFS)",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "网络要素服务(WFS)",
+                    "thumbnail": "wfsLayer.png",
+                    "main": "/data/example/wfsLayer/wfsLayer",
+                    "details": "Web Feature Service(WFS)属于OGC标准的服务，WFS提供地理要素的查询、编辑能力，样式可由浏览器端灵活配置",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-6",
+                    "id": "page_206",
+                    "meta": {
+                        "title": "XYZ地图瓦片",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "XYZ地图瓦片",
+                    "thumbnail": "xyzLayer.png",
+                    "main": "/data/example/xyzLayer/xyzLayer",
+                    "details": "XYZ地图瓦片由谷歌公司开发的一种地图瓦片服务，XYZ瓦片组织类型为金字塔结构",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "2-7",
+                    "id": "page_207",
+                    "meta": {
+                        "title": "卫星云图",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "卫星云图",
+                    "thumbnail": "cloudImagery.png",
+                    "main": "/data/example/cloudImagery/cloudImagery",
+                    "details": "中国天气网提供的卫星云图经过地图配准后，可在三维场景中叠加显示",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                }
+            ]
+        },
+        {
+            "name": "三维模型交互",
+            "hidden": false,
+            "index": "3",
+            "meta": {
+                "title": "三维模型交互",
+                "icon": "monitor",
+                "noCache": false,
+                "link": null
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "3-1",
+                    "id": "page_301",
+                    "meta": {
+                        "title": "3DTiles倾斜模型",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "3DTiles倾斜模型",
+                    "thumbnail": "3dtiles.png",
+                    "main": "/data/example/3dtiles/3dtiles",
+                    "details": "3DTiles属于OGC标准的服务，提供了一种流式加载倾斜模型、BIM等三维模型的解决方案",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-15",
+                    "id": "page_315",
+                    "meta": {
+                        "title": "3DTiles城市白膜",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "3DTiles城市白膜",
+                    "thumbnail": "baimo.png",
+                    "main": "/data/example/baimo/baimo",
+                    "details": "3DTiles由于LOD层次加载的优势, 可快速加载大批量的城市白膜数据",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-3",
+                    "id": "page_303",
+                    "meta": {
+                        "title": "Terrain地形服务",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "Terrain地形服务",
+                    "thumbnail": "terrain.png",
+                    "main": "/data/example/terrain/terrain",
+                    "details": "Terrain地形服务是一种四叉树结构的地形瓦片数据服务，地形瓦片可由DEM数据处理生成",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-4",
+                    "id": "page_304",
+                    "meta": {
+                        "title": "BIM模型",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "BIM模型",
+                    "thumbnail": "bim.png",
+                    "main": "/data/example/bim/bim",
+                    "details": "BIM支持GLTF格式模型的加载、显示与操作",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-5",
+                    "id": "page_305",
+                    "meta": {
+                        "title": "模型压平",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "模型压平",
+                    "thumbnail": "flat.png",
+                    "main": "/data/example/flat/flat",
+                    "details": "模型压平示例中提供交互式工具，可将选中区域的3DTiles模型压平至指定高度",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-14",
+                    "id": "page_314",
+                    "meta": {
+                        "title": "模型PBR",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "模型PBR",
+                    "thumbnail": "pbr.png",
+                    "main": "/data/example/pbr/pbr",
+                    "details": "示例展示了在三维场景中对基于物理渲染（PBR）的支持",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-6",
+                    "id": "page_306",
+                    "meta": {
+                        "title": "模型裁剪",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "模型裁剪",
+                    "thumbnail": "clip.png",
+                    "main": "/data/example/clip/clip",
+                    "details": "模型压平示例中提供交互式工具，可裁剪选中区域的3DTiles模型",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-7",
+                    "id": "page_307",
+                    "meta": {
+                        "title": "模型属性挂载",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "模型属性挂载",
+                    "thumbnail": "modelPick.png",
+                    "main": "/data/example/modelPick/modelPick",
+                    "details": "由BIM模型转换的3DTiles服务，可将BIM模型的属性信息保存至3DTiles的瓦片属性",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-8",
+                    "id": "page_308",
+                    "meta": {
+                        "title": "倾斜模型单体化",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "倾斜模型单体化",
+                    "thumbnail": "segment.png",
+                    "main": "/data/example/segment/segment",
+                    "details": "由倾斜模型转换的3DTiles服务，可通过叠加包含属性信息的矢量数据，实现倾斜模型的单体化功能",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-9",
+                    "id": "page_309",
+                    "meta": {
+                        "title": "地形压平",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "地形压平",
+                    "thumbnail": "ter_flat.png",
+                    "main": "/data/example/ter_flat/ter_flat",
+                    "details": "地形压平示例中提供交互式工具，可将选中区域的地形模型压平至指定高度",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-13",
+                    "id": "page_313",
+                    "meta": {
+                        "title": "地形开挖",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "地形开挖",
+                    "thumbnail": "ter_clip.png",
+                    "main": "/data/example/ter_clip/ter_clip",
+                    "details": "地形开挖示例中提供交互式工具，可显示选中区域的地形模型的开挖效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-10",
+                    "id": "page_310",
+                    "meta": {
+                        "title": "地形抬升",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "地形抬升",
+                    "thumbnail": "ter_up.png",
+                    "main": "/data/example/ter_up/ter_up",
+                    "details": "地形抬升示例中提供交互式工具，可显示选中区域的地形模型的抬升效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-11",
+                    "id": "page_311",
+                    "meta": {
+                        "title": "地形等高线效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "地形等高线效果",
+                    "thumbnail": "contourLine.png",
+                    "main": "/data/example/contourLine/contourLine",
+                    "details": "根据配置的样式信息，可以在指定区域的地形上添加地形等高线效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "3-12",
+                    "id": "page_312",
+                    "meta": {
+                        "title": "地形坡度坡向分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "地形坡度坡向分析",
+                    "thumbnail": "slope.png",
+                    "main": "/data/example/slope/slope",
+                    "details": "根据配置的样式信息，可在指定区域的地形上添加坡度、坡向的渲染效果，并获取坡度坡向数据",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                }
+            ]
+        },
+        {
+            "name": "空间分析能力",
+            "hidden": false,
+            "index": "1",
+            "meta": {
+                "title": "空间分析能力",
+                "icon": "chart",
+                "noCache": false,
+                "link": null
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "1-1",
+                    "id": "page_101",
+                    "meta": {
+                        "title": "空间量算",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null,
+                        "index": "1-1"
+                    },
+                    "name": "空间量算",
+                    "thumbnail": "measure.png",
+                    "main": "/data/example/measure/measure",
+                    "details": "空间量算示例展示了三维场景进行距离测量、面积测量、方位角测量等空间量算工具",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-2",
+                    "id": "page_102",
+                    "meta": {
+                        "title": "可视域分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "可视域分析",
+                    "thumbnail": "viewShed.png",
+                    "main": "/data/example/viewShed/viewShed",
+                    "details": "可视域分析示例中提供了交互式分析工具，默认可视区域为绿色，否则为红色",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-3",
+                    "id": "page_103",
+                    "meta": {
+                        "title": "开敞度分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "开敞度分析",
+                    "thumbnail": "viewDome.png",
+                    "main": "/data/example/viewDome/viewDome",
+                    "details": "开敞度分析示例中提供了交互式分析工具，以点选点为中心，周围可视区域为蓝色，否则为黄色",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-4",
+                    "id": "page_104",
+                    "meta": {
+                        "title": "限高分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "限高分析",
+                    "thumbnail": "limitHeight.png",
+                    "main": "/data/example/limitHeight/limitHeight",
+                    "details": "绘制分析区域，超出设置高度的3DTiles模型将标注为红色",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-5",
+                    "id": "page_105",
+                    "meta": {
+                        "title": "填挖方分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "填挖方分析",
+                    "thumbnail": "earthWork.png",
+                    "main": "/data/example/earthWork/earthWork",
+                    "details": "绘制分析区域，根据插值点密度与填挖基准面，估计分析区域的填挖方量",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-6",
+                    "id": "page_106",
+                    "meta": {
+                        "title": "剖面分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "剖面分析",
+                    "thumbnail": "section.png",
+                    "main": "/data/example/section/section",
+                    "details": "剖面分析示例中，根据绘制剖面线的位置，计算出剖面线上的高程变化",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-7",
+                    "id": "page_107",
+                    "meta": {
+                        "title": "通视分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "通视分析",
+                    "thumbnail": "sightLine.png",
+                    "main": "/data/example/sightLine/sightLine",
+                    "details": "通视分析示例中，在场景中标注观察位置与目标点，从观察位置到目标点的视线中，可视部分标为绿色，否则为红色",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-8",
+                    "id": "page_108",
+                    "meta": {
+                        "title": "缓冲分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "缓冲分析",
+                    "thumbnail": "buffer.png",
+                    "main": "/data/example/buffer/buffer",
+                    "details": "缓冲分析示例中，通过点、线、面的缓冲区，可提取出缓冲区内容的地理要素",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-9",
+                    "id": "page_109",
+                    "meta": {
+                        "title": "天际线分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "天际线分析",
+                    "thumbnail": "skyline.png",
+                    "main": "/data/example/skyline/skyline",
+                    "details": "天际线分析标注天空与地面地物的交界线",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-10",
+                    "id": "page_110",
+                    "meta": {
+                        "title": "淹没分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "淹没分析",
+                    "thumbnail": "flood.png",
+                    "main": "/data/example/flood/flood",
+                    "details": "淹没分析示例根据淹没的最低、最高高度，可动态播放3DTiles模型的淹没过程效果",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "1-11",
+                    "id": "page_111",
+                    "meta": {
+                        "title": "光照分析",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "光照分析",
+                    "thumbnail": "shadow.png",
+                    "main": "/data/example/shadow/shadow",
+                    "details": "光照分析统计分析区域插值点位的光照时间，计算并显示点位上的阴影率",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                }
+            ]
+        },
+        {
+            "name": "场景特效",
+            "hidden": false,
+            "index": "4",
+            "meta": {
+                "title": "场景特效",
+                "icon": "SlackOutlined",
+                "noCache": false,
+                "link": null
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "4-1",
+                    "id": "page_401",
+                    "meta": {
+                        "title": "大气效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "大气效果",
+                    "thumbnail": "skyEffect.png",
+                    "main": "/data/example/skyEffect/skyEffect",
+                    "details": "基于Aerial Perspective LUT技术的大气透射后处理效果与天空后处理效果",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-2",
+                    "id": "page_402",
+                    "meta": {
+                        "title": "体积云效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "体积云效果",
+                    "thumbnail": "cloudEffect.png",
+                    "main": "/data/example/cloudEffect/cloudEffect",
+                    "details": "基于Ray Marching技术的简单体积云效果",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-3",
+                    "id": "page_403",
+                    "meta": {
+                        "title": "动态粒子效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "动态粒子效果",
+                    "thumbnail": "particle.gif",
+                    "main": "/data/example/particle/particle",
+                    "details": "动态粒子效果示例中以水粒子为例，展示粒子的动态效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-4",
+                    "id": "page_404",
+                    "meta": {
+                        "title": "描边效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "描边效果",
+                    "thumbnail": "outline.png",
+                    "main": "/data/example/outline/outline",
+                    "details": "示例中展示BIM模型的描边效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-9",
+                    "id": "page_409",
+                    "meta": {
+                        "title": "高亮泛光效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "高亮泛光效果",
+                    "thumbnail": "brightness.png",
+                    "main": "/data/example/brightness/brightness",
+                    "details": "示例中展示BIM模型的高亮泛光效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-10",
+                    "id": "page_410",
+                    "meta": {
+                        "title": "夜视效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "夜视效果",
+                    "thumbnail": "nightVision.png",
+                    "main": "/data/example/nightVision/nightVision",
+                    "details": "提供了三维场景中全局显示红外线夜视效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-5",
+                    "id": "page_405",
+                    "meta": {
+                        "title": "降雨效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "降雨效果",
+                    "thumbnail": "rain.gif",
+                    "main": "/data/example/rain/rain",
+                    "details": "降雨效果提供了可控制降雨后处理效果的降雨速度、方向等参数的方法",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-6",
+                    "id": "page_406",
+                    "meta": {
+                        "title": "降雪效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "降雪效果",
+                    "thumbnail": "snow.gif",
+                    "main": "/data/example/snow/snow",
+                    "details": "降雪效果示例中可控制降雪后处理效果的降雪速度、方向及积雪效果的参数方法",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-7",
+                    "id": "page_407",
+                    "meta": {
+                        "title": "雾天效果",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "雾天效果",
+                    "thumbnail": "fog.png",
+                    "main": "/data/example/fog/fog",
+                    "details": "雾天效果示例中可控制降雪后处理效果的降雪速度、方向及积雪效果的参数方法",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "4-8",
+                    "id": "page_408",
+                    "meta": {
+                        "title": "四季模拟",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "四季模拟",
+                    "thumbnail": "season.gif",
+                    "main": "/data/example/season/season",
+                    "details": "示例模拟春、夏、秋、冬四季的场景特效",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                }
+            ]
+        },
+        {
+            "name": "简单几何要素",
+            "hidden": false,
+            "index": "6",
+            "meta": {
+                "title": "简单几何要素",
+                "icon": "GatewayOutlined",
+                "noCache": false,
+                "link": null
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "6-1",
+                    "id": "page_601",
+                    "meta": {
+                        "title": "文字要素(固定朝向)",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "文字要素(固定朝向)",
+                    "thumbnail": "label.png",
+                    "main": "/data/example/label/label",
+                    "details": "示例展示在三维场景中添加固定朝向的文字要素（朝向屏幕正面）",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-2",
+                    "id": "page_602",
+                    "meta": {
+                        "title": "文字贴图(自由朝向)",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "文字贴图(自由朝向)",
+                    "thumbnail": "labelMaterial.png",
+                    "main": "/data/example/labelMaterial/labelMaterial",
+                    "details": "示例展示在三维场景中添加自由朝向的文字贴图（文字作为多边形要素的贴图，多边形朝向即为文字朝向）",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-3",
+                    "id": "page_603",
+                    "meta": {
+                        "title": "要素聚合",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "要素聚合",
+                    "thumbnail": "cluster.png",
+                    "main": "/data/example/cluster/cluster",
+                    "details": "三维场景中的点要素、图标要素、文字要素可以根据要素之间的像素距离，分别进行聚合显示",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-4",
+                    "id": "page_604",
+                    "meta": {
+                        "title": "图标要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "图标要素",
+                    "thumbnail": "billboard.png",
+                    "main": "/data/example/billboard/billboard",
+                    "details": "示例展示了在三维场景中添加点位图标要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-5",
+                    "id": "page_605",
+                    "meta": {
+                        "title": "多段线要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "多段线要素",
+                    "thumbnail": "polyline.png",
+                    "main": "/data/example/polyline/polyline",
+                    "details": "示例展示了在三维场景中添加多段线要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-6",
+                    "id": "page_606",
+                    "meta": {
+                        "title": "多边形要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "多边形要素",
+                    "thumbnail": "polygon.png",
+                    "main": "/data/example/polygon/polygon",
+                    "details": "示例展示了在三维场景中添加多边形要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-7",
+                    "id": "page_607",
+                    "meta": {
+                        "title": "椭圆要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "椭圆要素",
+                    "thumbnail": "ellipse.png",
+                    "main": "/data/example/ellipse/ellipse",
+                    "details": "示例展示了在三维场景中添加椭圆要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-13",
+                    "id": "page_613",
+                    "meta": {
+                        "title": "长方体要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "长方体要素",
+                    "thumbnail": "cube.png",
+                    "main": "/data/example/cube/cube",
+                    "details": "示例展示了在三维场景中添加长方体要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-14",
+                    "id": "page_614",
+                    "meta": {
+                        "title": "墙体要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "墙体要素",
+                    "thumbnail": "wall.png",
+                    "main": "/data/example/wall/wall",
+                    "details": "示例展示了在三维场景中添加墙体要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-15",
+                    "id": "page_615",
+                    "meta": {
+                        "title": "椭球要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "椭球要素",
+                    "thumbnail": "ellipsoil.png",
+                    "main": "/data/example/ellipsoil/ellipsoil",
+                    "details": "示例展示了在三维场景中添加椭球要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-16",
+                    "id": "page_616",
+                    "meta": {
+                        "title": "圆柱体要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "圆柱体要素",
+                    "thumbnail": "cylinder.png",
+                    "main": "/data/example/cylinder/cylinder",
+                    "details": "示例展示了在三维场景中添加圆柱体要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-17",
+                    "id": "page_617",
+                    "meta": {
+                        "title": "锥体要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "锥体要素",
+                    "thumbnail": "cone.png",
+                    "main": "/data/example/cone/cone",
+                    "details": "示例展示了在三维场景中添加锥体要素的效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-12",
+                    "id": "page_612",
+                    "meta": {
+                        "title": "光锥体要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "光锥体要素",
+                    "thumbnail": "lightCone.png",
+                    "main": "/data/example/lightCone/lightCone",
+                    "details": "光锥体要素是一类特殊的复合类要素，由内外层圆锥、底面圆等简单要素组合而成",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-18",
+                    "id": "page_618",
+                    "meta": {
+                        "title": "管廊体要素",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "管廊体要素",
+                    "thumbnail": "polylineVolume.png",
+                    "main": "/data/example/polylineVolume/polylineVolume",
+                    "details": "管廊体要素是一类特殊的复合类要素，可以实现中空管廊、实心管道等多种体要素",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-10",
+                    "id": "page_610",
+                    "meta": {
+                        "title": "要素空间查询",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "要素空间查询",
+                    "thumbnail": "spatialQuery.png",
+                    "main": "/data/example/spatialQuery/spatialQuery",
+                    "details": "根据几何要素的空间信息，在众多要素中查询出符合要求的要素 ",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-19",
+                    "id": "page_619",
+                    "meta": {
+                        "title": "要素属性查询",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "要素属性查询",
+                    "thumbnail": "attributeQuery.png",
+                    "main": "/data/example/attributeQuery/attributeQuery",
+                    "details": "根据几何要素的属性信息，在众多要素中查询出符合要求的要素 ",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-11",
+                    "id": "page_611",
+                    "meta": {
+                        "title": "多段线样式",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "多段线样式",
+                    "thumbnail": "polylineStyle.gif",
+                    "main": "/data/example/polylineStyle/polylineStyle",
+                    "details": "多段线要素支持多种风格的样式设置，满足不同业务的可视化需求",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-23",
+                    "id": "page_623",
+                    "meta": {
+                        "title": "多边形样式",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "多边形样式",
+                    "thumbnail": "polygonStyle.gif",
+                    "main": "/data/example/polygonStyle/polygonStyle",
+                    "details": "多边形要素支持多种风格的样式设置，满足不同业务的可视化需求",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-21",
+                    "id": "page_621",
+                    "meta": {
+                        "title": "动态点DIV样式",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "动态点DIV样式",
+                    "thumbnail": "divLightPoint.gif",
+                    "main": "/data/example/divLightPoint/divLightPoint",
+                    "details": "渲染html纹理的二维简单要素应用",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-20",
+                    "id": "page_620",
+                    "meta": {
+                        "title": "饼图DIV样式",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "饼图DIV样式",
+                    "thumbnail": "echarts-pie.png",
+                    "main": "/data/example/echarts-pie/echarts-pie",
+                    "details": "实现Div标签位置的自动跟随，满足更加丰富的标注需求",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "6-22",
+                    "id": "page_622",
+                    "meta": {
+                        "title": "水球点DIV样式",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "水球点DIV样式",
+                    "thumbnail": "balloonPoint.gif",
+                    "main": "/data/example/balloonPoint/balloonPoint",
+                    "details": "实现Div标签位置的自动跟随，满足更加丰富的标注需求",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                }
+            ]
+        },
+        {
+            "name": "场景相机控制",
+            "hidden": false,
+            "index": "8",
+            "meta": {
+                "title": "场景相机控制",
+                "icon": "CameraOutlined",
+                "noCache": false,
+                "link": null
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "8-7",
+                    "id": "page_807",
+                    "meta": {
+                        "title": "相机飞行",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "相机飞行",
+                    "thumbnail": "camera.gif",
+                    "main": "/data/example/camera/camera",
+                    "details": "使用相机的飞行功能，实现室内外的视角切换",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "8-1",
+                    "id": "page_801",
+                    "meta": {
+                        "title": "键盘漫游",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "键盘漫游",
+                    "thumbnail": "keyboardRoam.png",
+                    "main": "/data/example/keyboardRoam/keyboardRoam",
+                    "details": "根据键盘输入，实现键盘漫游",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "8-2",
+                    "id": "page_802",
+                    "meta": {
+                        "title": "二三维一体化显示",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "二三维一体化显示",
+                    "thumbnail": "doubleCompare.png",
+                    "main": "/data/example/doubleCompare/doubleCompare",
+                    "details": "视图切换和对比，双屏对比",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "8-3",
+                    "id": "page_803",
+                    "meta": {
+                        "title": "视点飞行",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "视点飞行",
+                    "thumbnail": "viewpointFlight.gif",
+                    "main": "/data/example/viewpointFlight/viewpointFlight",
+                    "details": "场景相机按照规定的视点位置播放相机飞行动画效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "8-4",
+                    "id": "page_804",
+                    "meta": {
+                        "title": "第一人称贴地漫游",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "第一人称贴地漫游",
+                    "thumbnail": "firstPersonRoam.gif",
+                    "main": "/data/example/firstPersonRoam/firstPersonRoam",
+                    "details": "场景相机朝相机正前方方向自动贴地漫游，按下鼠标滑动可改变前进方向",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "8-5",
+                    "id": "page_805",
+                    "meta": {
+                        "title": "相机视场角",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "相机视场角",
+                    "thumbnail": "fov.gif",
+                    "main": "/data/example/fov/fov",
+                    "details": "可切换场景相机的视场角，以获得最佳的观察视角",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "8-6",
+                    "id": "page_806",
+                    "meta": {
+                        "title": "无人机历史路径",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "无人机历史路径",
+                    "thumbnail": "fixedRoute.png",
+                    "main": "/data/example/fixedRoute/fixedRoute",
+                    "details": "使用FixedRoute类组合多类要素，实现无人机历史轨迹",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                }
+            ]
+        },
+        {
+            "name": "视频应用",
+            "hidden": true,
+            "index": "8",
+            "meta": {
+                "title": "视频应用",
+                "icon": "chart",
+                "noCache": false,
+                "link": null
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "8-1",
+                    "id": "page_801",
+                    "meta": {
+                        "title": "视频点位",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "视频DIV点位",
+                    "thumbnail": "videoDIV.gif",
+                    "main": "/data/example/videoDIV/videoDIV",
+                    "details": "实现Div视频标签位置的自动跟随，满足查看标注位置视频信息的需求",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "8-2",
+                    "id": "page_802",
+                    "meta": {
+                        "title": "视频纹理",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "视频纹理",
+                    "thumbnail": "videoPrimitive.gif",
+                    "main": "/data/example/videoPrimitive/videoPrimitive",
+                    "details": "视频将作为多边形几何要素的动态纹理进行展示，视频画面的形状会随着",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "8-3",
+                    "id": "page_803",
+                    "meta": {
+                        "title": "视频融合",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "视频融合",
+                    "thumbnail": "video3D.gif",
+                    "main": "/data/example/video3D/video3D",
+                    "details": "视频将以特效后处理的方式，融合到三维场景之中，拥有较好的融合表现效果",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                }
+            ]
+        },
+        {
+            "name": "插件功能",
+            "hidden": false,
+            "index": "7",
+            "meta": {
+                "title": "插件功能",
+                "icon": "FundViewOutlined",
+                "noCache": false,
+                "link": null
+            },
+            "children": [
+                {
+                    "hidden": false,
+                    "index": "7-1",
+                    "id": "page_701",
+                    "meta": {
+                        "title": "HeatMap热力图",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "HeatMap热力图",
+                    "thumbnail": "heatMap.png",
+                    "main": "/data/example/heatMap/heatMap",
+                    "details": "兼容Heatmap.js插件，可以提供高效、美观的Web3D热力图效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "7-2",
+                    "id": "page_702",
+                    "meta": {
+                        "title": "Turf等值面",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "Turf等值面",
+                    "thumbnail": "turf.png",
+                    "main": "/data/example/turf/turf",
+                    "details": "Turf.js插件，可以提供丰富的地理空间分析库，及各种地图处理算法",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                }
+                ,
+                {
+                    "hidden": false,
+                    "index": "7-3",
+                    "id": "page_703",
+                    "meta": {
+                        "title": "ECharts散点图",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "ECharts散点图",
+                    "thumbnail": "echarts.gif",
+                    "main": "/data/example/echarts/echarts",
+                    "details": "ECharts.js插件，可以提供丰富的开源可视化图表库，及各种地图图表可视化效果",
+                    "instanceTag": "0",
+                    "instanceType": "2"
+                },
+                {
+                    "hidden": false,
+                    "index": "7-4",
+                    "id": "page_704",
+                    "meta": {
+                        "title": "S3M服务",
+                        "icon": "menu",
+                        "iconSelect": "menuSelect",
+                        "noCache": false,
+                        "link": null
+                    },
+                    "name": "S3M服务",
+                    "thumbnail": "s3m.png",
+                    "main": "/data/example/s3m/s3m",
+                    "details": "Spatial 3D Model(S3M)是由超图(SuperMap)提供的一种流式加载三维模型的解决方案，属于测绘行业标准",
+                    "instanceTag": "1",
+                    "instanceType": "2"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>二三维一体化显示</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body class="dark">
+    <!-- <div id="geminiContainer" class="gemini-container"></div> -->
+    <!-- <div id="geminiToolbar" class="gemini-toolbar">
+
+      
+    </div> -->
+    <div id="centerDiv3D">
+        <div id="geminiContainer" class="gemini-container"></div>
+    </div>
+    <script type="text/javascript">
+        let mapOptions = {
+            scene: {
+                globe: {
+                    depthTestAgainstTerrain: true,
+                    showGroundAtmosphere: false,
+                },
+                center: { "lat": 34.928988, "lng": 110.943626, "alt": 4656692.7, "heading": 0.3, "pitch": -89.5 }
+            },
+            mouse: {
+                enabledMoveTarget: false,
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: false
+            },
+            control: {
+                // baseLayerPicker: true,
+                // timeline: { zoom: true, enabled: true }, // 方式1：options中添加控件 ; zoom - 禁止缩放
+            },
+            basemaps: [
+
+            ],
+            layers: [
+
+            ],
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+        map.scene.morphTo2D(0)
+
+        let wmsLayer = new gemini.layer.WmsLayer({
+            url: "https://iserver.supermap.io/iserver/services/map-china400/wms111/China",
+            layers: "China",
+            parameters: {
+                transparent: true,
+                format: "image/png",
+            },
+        })
+        const graphic = new gemini.graphic.BillboardEntity({
+            name: "测试点位",
+            position: { lng: 116.991026, lat: 36.687323, alt: 0 },
+            style: {
+                image: "../img/marker/mark-blue.png",
+                horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+            },
+        })
+        map.graphicLayer.addGraphic(graphic)
+        map.addLayer(wmsLayer)
+
+        let mapSplit
+        createControl()
+        function createControl() {
+            if (mapSplit) {
+                return
+            }
+
+            // 获取原来地图的参数
+            let mapOptions2 = map.getCurrentOptions() // map.getOptions()
+            mapOptions2.control.sceneModePicker = false
+            mapSplit = new gemini.control.MapCompare({
+                ...mapOptions2,
+                parentContainer: document.body,
+                enabled: true,
+            })
+            map.addControl(mapSplit)
+
+            let graphic2 = new gemini.graphic.BillboardEntity({
+                name: "测试点位2",
+                position: { lng: 116.991026, lat: 36.687323, alt: 0 },
+                style: {
+                    image: "../img/marker/mark-blue.png",
+                    horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+                },
+            })
+            mapSplit.mapEx.graphicLayer.addGraphic(graphic2)
+        }
+
+    </script>
+    <style>
+        #centerDiv3D {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+        }
+
+        #centerDivEx {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            border: 1px solid #ccc;
+            top: 0px;
+            bottom: 0px;
+            width: 50%;
+        }
+    </style>
+
+</body>
+
+</html>

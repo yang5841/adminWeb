@@ -1,0 +1,4788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BasePolyCombine - Gemini API文档</title>
+
+    <!--[if lt IE 9]>
+      <script src="javascript/html5.js"></script>
+    <![endif]-->
+    <link href="styles/jsdoc-default.css" rel="stylesheet">
+    <link href="styles/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">
+
+    </h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+    <div class="nameContainer">
+
+    <h4 class="name" id="BasePolyCombine">
+        <a href="#BasePolyCombine" class="doc-link"></a>
+        new gemini.graphic.BasePolyCombine<span class="signature">(options)</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BasePolyCombine.js 13
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>大数据线面集合 (合并渲染) Primitive图元 矢量对象基类</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                <p>参数对象，包括以下：</p>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+        <th>默认值</th>
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instances</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;object></span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>线面信息数组，单个对象包括：</p>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>positions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="LngLatPoint.html">LngLatPoint</a>></span>
+|
+
+<span class="param-type">Array.&lt;Cesium.Cartesian3></span>
+|
+
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                
+
+                
+            
+                <p>坐标位置</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>style</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>样式信息</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>矢量数据的 属性信息，可以任意附加属性。</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>style</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>所有面的公共样式信息</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>highlight</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>鼠标移入或单击后的对应高亮的部分样式(仅支持Color纯色材质)</p>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>触发高亮的方式，默认鼠标移入，可以指定为type:'click'为单击后高亮</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>appearance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Cesium.Appearance</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>[cesium原生]用于渲染图元的外观。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attributes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Cesium.Appearance</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>[cesium原生]每个实例的属性。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>depthFailAppearance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Cesium.Appearance</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>当深度测试失败时，用于为该图元着色的外观。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>vertexCacheOptimize</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">false</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>当true，几何顶点优化前和后顶点着色缓存。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>interleave</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">false</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>当true时，几何顶点属性被交叉，这可以略微提高渲染性能，但会增加加载时间。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>compressVertices</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">true</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>当true时，几何顶点被压缩，这将节省内存。提升效率。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>releaseGeometryInstances</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">true</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>当true时，图元不保留对输入geometryInstances的引用以节省内存。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>allowPicking</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">true</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>当true时，每个几何图形实例只能通过<code>Scene#pick</code>进行挑选。当false时，保存GPU内存。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cull</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">true</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>当true时，渲染器会根据图元的边界体积来剔除它们的截锥和地平线。设置为false，如果你手动剔除图元，可以获得较小的性能提升。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>asynchronous</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">true</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>确定该图元是异步创建还是阻塞创建，直到就绪。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>debugShowBoundingVolume</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">false</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>仅供调试。确定该图元命令的边界球是否显示。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>debugShowShadowVolume</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">false</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>仅供调试。贴地时，确定是否绘制了图元中每个几何图形的阴影体积。必须是true创建卷之前要释放几何图形或选项。releaseGeometryInstance必须是false。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>popup</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>绑定的popup弹窗值，也可以bindPopup方法绑定</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>popupOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Popup.html#.StyleOptions">Popup.StyleOptions</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>popup弹窗时的配置参数，也支持如pointerEvents等<a href="Popup.html"><code>Popup</code></a>构造参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tooltip</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>绑定的tooltip弹窗值，也可以bindTooltip方法绑</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tooltipOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Tooltip.html#.StyleOptions">Tooltip.StyleOptions</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>tooltip弹窗时的配置参数，也支持如pointerEvents等<a href="Tooltip.html"><code>Tooltip</code></a>构造参数</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>contextmenuItems</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>当矢量数据支持右键菜单时，也可以bindContextMenu方法绑定</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">createGuid()</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>矢量数据id标识</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">''</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>矢量数据名称</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>show</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">true</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>矢量数据是否显示</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>availability</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Cesium.TimeIntervalCollection</span>
+|
+
+<span class="param-type">Cesium.TimeInterval</span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>指定时间范围内显示该对象</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>eventParent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="BaseClass.html">BaseClass</a></span>
+|
+
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>指定的事件冒泡对象，默认为所加入的图层对象，false时不冒泡事件</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>allowDrillPick</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+|
+
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>是否允许鼠标穿透拾取</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>flyTo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>加载完成数据后是否自动飞行定位到数据所在的区域。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>flyToOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>加载完成数据后是否自动飞行定位到数据所在的区域的对应 <a href="BaseGraphic.html#flyTo"><code>BaseGraphic#flyTo</code></a>方法参数。</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>参考:</h5>
+    <ul class="see-list">
+        <li><p><a href="BaseGraphic.html#.EventType"><code>支持的事件类型</code></a></p></li>
+    </ul>
+    
+
+    
+</dl>
+
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title" title="Extends">继承</h3>
+
+        
+
+
+    <ul>
+        <li><a href="BaseCombine.html">BaseCombine</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title" title="Members">成员(属性)</h3>
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="geometryInstanceAttributes">
+    <a href="#geometryInstanceAttributes" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> geometryInstanceAttributes<span class="type-signature"> : object</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 136
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>返回实例可修改的属性。<code>Cesium.GeometryInstance</code></p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#geometryInstanceAttributes">BasePrimitive#geometryInstanceAttributes</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5 title="Example">使用示例:</h5>
+        
+    <pre><code class="language-javascript">var attributes = primitiveGraphic.geometryInstanceAttributes;attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.AQUA);attributes.show = Cesium.ShowGeometryInstanceAttribute.toValue(true);</code></pre>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="instances">
+    <a href="#instances" class="doc-link"></a>
+    instances<span class="type-signature"> : Array.&lt;object></span>
+    
+
+<div class="source-link rightLinks">
+    graphic/combine/BaseCombine.js 22
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>数据集合数组，同类的构造参数</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BaseCombine.html#instances">BaseCombine#instances</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="isEditing">
+    <a href="#isEditing" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> isEditing<span class="type-signature"> : boolean</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 180
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>是否正在编辑状态，不是所有子类均支持编辑</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#isEditing">BasePrimitive#isEditing</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="label">
+    <a href="#label" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> label<span class="type-signature"> : Array.&lt;Cesium.Label>|*</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/combine/BasePolyCombine.js 82
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>附加的label文本对象</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="offsetHeight">
+    <a href="#offsetHeight" class="doc-link"></a>
+    offsetHeight<span class="type-signature"> : number</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 188
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>平移指定偏移高度（相对于原始坐标值），【提示：仅部分子类支持,如 <a href="PolygonPrimitive.html"><code>PolygonPrimitive</code></a>、<a href="RectanglePrimitive.html"><code>RectanglePrimitive</code></a>、<a href="BoxPrimitive.html"><code>BoxPrimitive</code></a>、<a href="CylinderPrimitive.html"><code>CylinderPrimitive</code></a>、<a href="EllipsoidPrimitive.html"><code>EllipsoidPrimitive</code></a>、<a href="CorridorPrimitive.html"><code>CorridorPrimitive</code></a>】</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#offsetHeight">BasePrimitive#offsetHeight</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="primitive">
+    <a href="#primitive" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> primitive<span class="type-signature"> : Cesium.Primitive|Cesium.GroundPrimitive|Cesium.ClassificationPrimitive|*</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 88
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>矢量数据对应的 Cesium内部对象</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#primitive">BasePrimitive#primitive</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="primitiveCollection">
+    <a href="#primitiveCollection" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> primitiveCollection<span class="type-signature"> : Cesium.PrimitiveCollection|Cesium.LabelCollection|Cesium.BillboardCollection|Cesium.PointPrimitiveCollection|Cesium.CloudCollection</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 78
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>当加载primitive数据的内部Cesium容器</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#primitiveCollection">BasePrimitive#primitiveCollection</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="ready">
+    <a href="#ready" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> ready<span class="type-signature"> : boolean</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 97
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>矢量数据对应的渲染是否完成</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#ready">BasePrimitive#ready</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="readyPromise">
+    <a href="#readyPromise" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> readyPromise<span class="type-signature"> : Promise.&lt;object></span>
+    
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 106
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>获取Primitive对象渲染完成的Promise承诺(仅部分支持,不支持对象会打印log)</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#readyPromise">BasePrimitive#readyPromise</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="style">
+    <a href="#style" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> style<span class="type-signature"> : object</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/combine/BasePolyCombine.js 62
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>样式信息</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+<div class="nameContainer">
+<h4 class="name" id="uniforms">
+    <a href="#uniforms" class="doc-link"></a>
+    <span class="type-signature attribute-readonly">readonly</span> uniforms<span class="type-signature"> : object|undefined</span>
+    
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 157
+</div>
+
+
+</h4>
+
+</div>
+
+
+
+<div class="description">
+    <p>对应材质的uniforms（当赋有材质时）,
+一个对象，它的属性被用来设置片段着色器shader。</p>
+<p>
+对象属性值可以是常量或函数。这个函数将在每一帧后处理阶段执行之前被调用。
+</p>
+<p>
+ 常量值也可以是图像的URI、数据URI，或者可以用作纹理的HTML元素，如HTMLImageElement或HTMLCanvasElement。
+</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#uniforms">BasePrimitive#uniforms</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+
+    
+        <h3 class="subsection-title" title="Methods">方法</h3>
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="closeHighlight">
+        <a href="#closeHighlight" class="doc-link"></a>
+        closeHighlight<span class="signature">()</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BasePolyCombine.js 323
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>清除已选中的高亮，原有style的配置项需要与highlightStyle配置有一一对应关系，否则无法清除</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>无</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="eachInstances">
+        <a href="#eachInstances" class="doc-link"></a>
+        eachInstances<span class="signature">(method, <span class="optional">context</span>, <span class="optional">reverse</span>)</span> &rarr; <span class="type-signature returnType"><a href="GraphicLayer.html">GraphicLayer</a></span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BaseCombine.js 137
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>遍历所有数据集合数组并将其作为参数传递给回调函数</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>method</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                
+
+                
+            
+                <p>回调方法</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>context</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>侦听器的上下文(this关键字将指向的对象)。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reverse</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>是否倒序执行</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>当前对象本身,可以链式调用。</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BaseCombine.html#eachInstances">BaseCombine#eachInstances</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="endDraw">
+        <a href="#endDraw" class="doc-link"></a>
+        endDraw<span class="signature">()</span> &rarr; <span class="type-signature returnType">boolean</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 1165
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>完成绘制和编辑，如有未完成的绘制会自动完成。
+在移动端需要调用此方法来类似PC端双击结束。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>是否正常结束了矢量对象绘制</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#endDraw">BasePrimitive#endDraw</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="getPickedObject">
+        <a href="#getPickedObject" class="doc-link"></a>
+        getPickedObject<span class="signature">(pickId)</span> &rarr; <span class="type-signature returnType">object</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BaseCombine.js 59
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>根据 pickId 获取对应绑定的数据据对象</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pickId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                <p>单个对象的pickid</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>对应绑定的数据对象</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BaseCombine.html#getPickedObject">BaseCombine#getPickedObject</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="getRectangle">
+        <a href="#getRectangle" class="doc-link"></a>
+        getRectangle<span class="signature">(<span class="optional">options</span>)</span> &rarr; <span class="type-signature returnType">Cesium.Rectangle|object</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BaseCombine.js 94
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>获取数据的矩形边界</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>控制参数</p>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+        <th>默认值</th>
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>isFormat</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">false</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>是否格式化，格式化时示例： { xmin: 73.16895, xmax: 134.86816, ymin: 12.2023, ymax: 54.11485 }</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>isFormat：true时，返回格式化对象，isFormat：false时返回Cesium.Rectangle对象</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BaseCombine.html#getRectangle">BaseCombine#getRectangle</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="openHighlight">
+        <a href="#openHighlight" class="doc-link"></a>
+        openHighlight<span class="signature">(<span class="optional">highlightStyle</span>, <span class="optional">closeLast</span>, <span class="optional">pickedObject</span>)</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BasePolyCombine.js 287
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>高亮对象。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+        <th>默认值</th>
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>highlightStyle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>高亮的样式，具体见各<a href="global.html#GraphicType"><code>GraphicType</code></a>矢量数据的style参数。</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>closeLast</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">true</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>是否清除地图上上一次的高亮对象</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pickedObject</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>指定需要高亮的子对象, 如果是gemini的相关事件内时，可以取 event.pickedObject</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>无</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="openPopup">
+        <a href="#openPopup" class="doc-link"></a>
+        openPopup<span class="signature">(index, <span class="optional">event</span>)</span> &rarr; <span class="type-signature returnType"><a href="BaseGraphic.html">BaseGraphic</a>|*</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BasePolyCombine.js 370
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>打开绑定的弹窗</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                
+
+                
+            
+                <p>更新的instances对象index值</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>用于抛出事件时的相关额外属性</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>当前对象本身，可以链式调用</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="redraw">
+        <a href="#redraw" class="doc-link"></a>
+        redraw<span class="signature">(<span class="optional">style</span>)</span> &rarr; <span class="type-signature returnType"><a href="BasePrimitive.html">BasePrimitive</a></span>
+        
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 768
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>重新渲染</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>style</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>新的样式信息</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>当前对象本身</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#redraw">BasePrimitive#redraw</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="setColorStyle">
+        <a href="#setColorStyle" class="doc-link"></a>
+        setColorStyle<span class="signature">(style, <span class="optional">index</span>)</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BaseCombine.js 240
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>更新颜色, 只对纯色材质有效，其他材质无法单独更新，需要setStyle方法调用(全部更新渲染)。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>style</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                
+
+                
+            
+                <p>样式信息</p>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+        <th>默认值</th>
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Cesium.Color</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">"#ffffff"</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>颜色</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opacity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    <code class="language-javascript">1.0</code>
+                
+                </td>
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>透明度，取值范围：0.0-1.0</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>更新的instances对象index值，为空时更新所有对象。</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>空</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BaseCombine.html#setColorStyle">BaseCombine#setColorStyle</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="setOffsetHeight">
+        <a href="#setOffsetHeight" class="doc-link"></a>
+        setOffsetHeight<span class="signature">(<span class="optional">height</span>, <span class="optional">index</span>)</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BasePolyCombine.js 404
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>平移指定偏移高度（相对于原始坐标值），【提示：仅部分子类支持】</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>平移的高度值（单位：米）,为空时取每个对象的offsetHeight值</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>更新的instances对象index值，为空时更新所有对象。</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>无</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="setOpacity">
+        <a href="#setOpacity" class="doc-link"></a>
+        setOpacity<span class="signature">(value)</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 661
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>设置透明度, 不是所有类型均支持调整透明度，主要看数据类型和材质类型决定。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                <p>透明度</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>无</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#setOpacity">BasePrimitive#setOpacity</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="startDraw">
+        <a href="#startDraw" class="doc-link"></a>
+        startDraw<span class="signature">(layer)</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 1087
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>开始绘制矢量数据，绘制的数据会加载在layer图层。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>layer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="GraphicLayer.html">GraphicLayer</a></span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                <p>图层</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>无</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#startDraw">BasePrimitive#startDraw</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="startEditing">
+        <a href="#startEditing" class="doc-link"></a>
+        startEditing<span class="signature">()</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 1215
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>开始编辑对象</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>无</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#startEditing">BasePrimitive#startEditing</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="stopDraw">
+        <a href="#stopDraw" class="doc-link"></a>
+        stopDraw<span class="signature">()</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 1135
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>停止绘制</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>无</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#stopDraw">BasePrimitive#stopDraw</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="stopEditing">
+        <a href="#stopEditing" class="doc-link"></a>
+        stopEditing<span class="signature">()</span> &rarr; <span class="type-signature returnType">void</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/primitive/BasePrimitive.js 1291
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>停止编辑，释放正在编辑的对象。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>无</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BasePrimitive.html#stopEditing">BasePrimitive#stopEditing</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="toGeoJSON">
+        <a href="#toGeoJSON" class="doc-link"></a>
+        toGeoJSON<span class="signature">(<span class="optional">options</span>)</span> &rarr; <span class="type-signature returnType">object</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BaseCombine.js 193
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>将矢量数据导出为GeoJSON格式规范对象。[因为geojson格式规范，是拆分为多个Feature，如果不满足需求，也可以用toJSON方法]</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>参数对象:</p>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>参数名称</th>
+        
+
+        <th>类型</th>
+
+        
+
+        <th class="last">描述信息</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>noAlt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">
+            
+                
+                        <span class="optional">可选</span>
+                
+                
+
+                
+            
+                <p>不导出高度值</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>GeoJSON格式规范对象</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BaseCombine.html#toGeoJSON">BaseCombine#toGeoJSON</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            
+    <div class="nameContainer">
+
+    <h4 class="name" id="toJSON">
+        <a href="#toJSON" class="doc-link"></a>
+        toJSON<span class="signature">()</span> &rarr; <span class="type-signature returnType">object</span>
+        
+
+<div class="source-link rightLinks">
+    graphic/combine/BaseCombine.js 149
+</div>
+
+
+    </h4>
+
+    </div>
+
+    
+
+
+<div class="description">
+    <p>将矢量数据的坐标、样式及属性等信息导出为对象，可以用于存储。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 title="Returns">返回值:</h5>
+
+        
+<div class="param-desc">
+    <p>导出的坐标、样式及属性等信息</p>
+</div>
+
+
+    
+
+
+
+
+<dl class="details">
+
+
+    
+
+    
+
+    
+    <dt class="inherited-from" title="Inherited From">继承自:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="BaseCombine.html#toJSON">BaseCombine#toJSON</a>
+    </li></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+    <footer>
+        版权所有 © 2022-2024 浪潮智慧城市 Gemini v2024.1
+    </footer>
+</div>
+
+<div class="nav">
+    <div class="menu">
+        <input type="text" class="classFilter" id="ClassFilter" placeholder="Search">
+        <ul id="ClassList"><li data-name="AngleMeasure" title="角度量算对象，" ><a href="AngleMeasure.html">AngleMeasure</a></li><li data-name="Animation" title="时钟仪表控制 控件 (Cesium原生)" ><a href="Animation.html">Animation</a></li><li data-name="ArcFrustum" title="弧形截头体," ><a href="ArcFrustum.html">ArcFrustum</a></li><li data-name="ArcGisCacheLayer" title="ArcGIS生成的金字塔瓦片数据" ><a href="ArcGisCacheLayer.html">ArcGisCacheLayer</a></li><li data-name="ArcGisLayer" title="ArcGIS标准服务图层" ><a href="ArcGisLayer.html">ArcGisLayer</a></li><li data-name="ArcGisTileLayer" title="ArcGIS瓦片服务（使用XYZ瓦片方式请求读取），可用于ArcGisLayer读取异常时。" ><a href="ArcGisTileLayer.html">ArcGisTileLayer</a></li><li data-name="ArcGisWfsLayer" title="ArcGIS WFS服务图层，" ><a href="ArcGisWfsLayer.html">ArcGisWfsLayer</a></li><li data-name="ArcGisWfsSingleLayer" title="ArcGIS WFS服务图层，" ><a href="ArcGisWfsSingleLayer.html">ArcGisWfsSingleLayer</a></li><li data-name="AreaMeasure" title="面积测量对象，" ><a href="AreaMeasure.html">AreaMeasure</a></li><li data-name="AreaSurfaceMeasure" title="贴地面积量算对象，" ><a href="AreaSurfaceMeasure.html">AreaSurfaceMeasure</a></li><li data-name="AttackArrow" title="攻击箭头  Entity矢量数据" ><a href="AttackArrow.html">AttackArrow</a></li><li data-name="AttackArrowPW" title="攻击箭头(平尾)  Entity矢量数据" ><a href="AttackArrowPW.html">AttackArrowPW</a></li><li data-name="AttackArrowYW" title="攻击箭头（燕尾）  Entity矢量数据" ><a href="AttackArrowYW.html">AttackArrowYW</a></li><li data-name="BaiduLayer" ><a href="BaiduLayer.html">BaiduLayer</a></li><li data-name="BaiduPOI" title="百度 POI查询 工具类 ，" ><a href="BaiduPOI.html">BaiduPOI</a></li><li data-name="BaseClass" title="基础类，SDK中几乎所有类的基类，都是继承该基类的。" ><a href="BaseClass.html">BaseClass</a></li><li data-name="BaseCombine" title="大数据合并渲染Primitive对象基类" ><a href="BaseCombine.html">BaseCombine</a></li><li data-name="BaseControl" title="控件 基类" ><a href="BaseControl.html">BaseControl</a></li><li data-name="BaseCzmControl" title="Cesium原生控件封装基类" ><a href="BaseCzmControl.html">BaseCzmControl</a></li><li data-name="BaseEffect" title="特效（后处理） 基类" ><a href="BaseEffect.html">BaseEffect</a></li><li data-name="BaseEntity" title="Entity实体 矢量对象 基类" ><a href="BaseEntity.html">BaseEntity</a></li><li data-name="BaseGraphic" title="矢量数据 基础类" ><a href="BaseGraphic.html">BaseGraphic</a></li><li data-name="BaseGraphicLayer" title="矢量数据图层 Base基类" ><a href="BaseGraphicLayer.html">BaseGraphicLayer</a></li><li data-name="BaseLayer" title="图层对象 的基类" ><a href="BaseLayer.html">BaseLayer</a></li><li data-name="BaseLayerPicker" title="底图切换 控件 (Cesium原生)" ><a href="BaseLayerPicker.html">BaseLayerPicker</a></li><li data-name="BaseMaterialConver" title="通用材质 转换处理类" ><a href="BaseMaterialConver.html">BaseMaterialConver</a></li><li data-name="BaseMaterialProperty" title="材质属性(Entity使用) 基础类" ><a href="BaseMaterialProperty.html">BaseMaterialProperty</a></li><li data-name="BaseOptsConver" title="转换options参数处理基类" ><a href="BaseOptsConver.html">BaseOptsConver</a></li><li data-name="BasePointCombine" title="大数据点状数据基类 集合 (合并渲染) Primitive图元 矢量对象" ><a href="BasePointCombine.html">BasePointCombine</a></li><li data-name="BasePointEntity" title="单个坐标的点状Entity矢量数据 基类" ><a href="BasePointEntity.html">BasePointEntity</a></li><li data-name="BasePointPrimitive" title="单个坐标的点状 Primitive图元 矢量对象 基类" ><a href="BasePointPrimitive.html">BasePointPrimitive</a></li><li data-name="BasePolyCombine" title="大数据线面集合 (合并渲染) Primitive图元 矢量对象基类" ><a href="BasePolyCombine.html">BasePolyCombine</a></li><li data-name="BasePolyEntity" title="多个坐标的线面状  Entity矢量数据 基类" ><a href="BasePolyEntity.html">BasePolyEntity</a></li><li data-name="BasePolyPrimitive" title="多个坐标的线面状 Primitive图元 矢量对象 基类" ><a href="BasePolyPrimitive.html">BasePolyPrimitive</a></li><li data-name="BasePrimitive" title="Primitive图元 矢量对象 基类" ><a href="BasePrimitive.html">BasePrimitive</a></li><li data-name="BaseStyleConver" title="矢量数据style转换处理基类" ><a href="BaseStyleConver.html">BaseStyleConver</a></li><li data-name="BaseThing" title="Thing对象(如特效、分析、管理类等) 的基类" ><a href="BaseThing.html">BaseThing</a></li><li data-name="BaseTileLayer" title="栅格Tile瓦片图层 基类" ><a href="BaseTileLayer.html">BaseTileLayer</a></li><li data-name="BillboardEntity" title="图标点  Entity对象" ><a href="BillboardEntity.html">BillboardEntity</a></li><li data-name="BillboardPrimitive" title="图标点 Primitive矢量数据" ><a href="BillboardPrimitive.html">BillboardPrimitive</a></li><li data-name="BillboardStyleConver" title="Billboard 矢量数据style转换处理类" ><a href="BillboardStyleConver.html">BillboardStyleConver</a></li><li data-name="BingLayer" ><a href="BingLayer.html">BingLayer</a></li><li data-name="BlackAndWhiteEffect" title="黑白效果" ><a href="BlackAndWhiteEffect.html">BlackAndWhiteEffect</a></li><li data-name="BloomEffect" title="泛光效果, 使明亮的区域更亮，黑暗的区域更暗。" ><a href="BloomEffect.html">BloomEffect</a></li><li data-name="BloomTargetEffect" title="选中对象的 泛光效果。" ><a href="BloomTargetEffect.html">BloomTargetEffect</a></li><li data-name="BoxCombine" ><a href="BoxCombine.html">BoxCombine</a></li><li data-name="BoxEntity" ><a href="BoxEntity.html">BoxEntity</a></li><li data-name="BoxPrimitive" title="盒子 Primitive图元矢量对象" ><a href="BoxPrimitive.html">BoxPrimitive</a></li><li data-name="BoxStyleConver" title="Box矢量数据style转换处理类" ><a href="BoxStyleConver.html">BoxStyleConver</a></li><li data-name="BrightnessEffect" title="高亮特效" ><a href="BrightnessEffect.html">BrightnessEffect</a></li><li data-name="BrushLineEntity" title="自由绘制线" ><a href="BrushLineEntity.html">BrushLineEntity</a></li><li data-name="BusineDataLayer" title="BusineDataLayer" ><a href="BusineDataLayer.html">BusineDataLayer</a></li><li data-name="CameraHistory" title="相机视角记录及处理类，含 上一视图 下一视图 等" ><a href="CameraHistory.html">CameraHistory</a></li><li data-name="CanvasLabelEntity" ><a href="CanvasLabelEntity.html">CanvasLabelEntity</a></li><li data-name="CanvasWindLayer" title="Canvas风场图层，" ><a href="CanvasWindLayer.html">CanvasWindLayer</a></li><li data-name="ChinaCRS" title="国内偏移坐标系 枚举" ><a href="global.html#ChinaCRS">ChinaCRS</a></li><li data-name="CircleCombine" ><a href="CircleCombine.html">CircleCombine</a></li><li data-name="CircleEntity" title="圆、圆柱  Entity对象" ><a href="CircleEntity.html">CircleEntity</a></li><li data-name="CirclePrimitive" ><a href="CirclePrimitive.html">CirclePrimitive</a></li><li data-name="CircleScanMaterialProperty" title="圆形扫描效果 材质属性" ><a href="CircleScanMaterialProperty.html">CircleScanMaterialProperty</a></li><li data-name="CircleStyleConver" title="Circle 矢量数据style转换处理类" ><a href="CircleStyleConver.html">CircleStyleConver</a></li><li data-name="CircleWaveMaterialProperty" title="圆形扩散波纹效果 材质属性" ><a href="CircleWaveMaterialProperty.html">CircleWaveMaterialProperty</a></li><li data-name="ClipType" title="裁剪模型类型" ><a href="global.html#ClipType">ClipType</a></li><li data-name="ClockAnimate" title="时钟及其动画的管理控制" ><a href="ClockAnimate.html">ClockAnimate</a></li><li data-name="CloseVurve" title="闭合曲面(3个点)   Entity矢量数据" ><a href="CloseVurve.html">CloseVurve</a></li><li data-name="CloudEffect" title="基于Unity实现“我的世界”风格的体积云效果的改造" ><a href="CloudEffect.html">CloudEffect</a></li><li data-name="CloudPrimitive" title="积云 Primitive矢量数据" ><a href="CloudPrimitive.html">CloudPrimitive</a></li><li data-name="CloudStyleConver" title="Cloud 矢量数据style转换处理类" ><a href="CloudStyleConver.html">CloudStyleConver</a></li><li data-name="ColorCorrectionEffect" title="颜色校正 效果" ><a href="ColorCorrectionEffect.html">ColorCorrectionEffect</a></li><li data-name="ColorRamp" title="颜色色带 控制类" ><a href="ColorRamp.html">ColorRamp</a></li><li data-name="Compass" title="导航球控件" ><a href="Compass.html">Compass</a></li><li data-name="ConeTrack" title="圆锥追踪体" ><a href="ConeTrack.html">ConeTrack</a></li><li data-name="ConeTrackPrimitive" title="圆锥追踪体 Primitive图元矢量对象" ><a href="ConeTrackPrimitive.html">ConeTrackPrimitive</a></li><li data-name="ConeVisibility" title="扇形可视域区域分析 矢量对象，该对象暂不支持鼠标交互和拾取" ><a href="ConeVisibility.html">ConeVisibility</a></li><li data-name="ContextMenu" title="右键菜单 控件" ><a href="ContextMenu.html">ContextMenu</a></li><li data-name="ContourLine" title="等高线" ><a href="ContourLine.html">ContourLine</a></li><li data-name="ControlType" title="控件类型" ><a href="global.html#ControlType">ControlType</a></li><li data-name="ControlUtil" title="控件相关 静态方法" ><a href="ControlUtil.html">ControlUtil</a></li><li data-name="CorridorCombine" ><a href="CorridorCombine.html">CorridorCombine</a></li><li data-name="CorridorEntity" ><a href="CorridorEntity.html">CorridorEntity</a></li><li data-name="CorridorPrimitive" ><a href="CorridorPrimitive.html">CorridorPrimitive</a></li><li data-name="CorridorStyleConver" title="Corridor 矢量数据style转换处理类" ><a href="CorridorStyleConver.html">CorridorStyleConver</a></li><li data-name="CRS" title="坐标系 枚举" ><a href="global.html#CRS">CRS</a></li><li data-name="CurveEntity" title="曲线" ><a href="CurveEntity.html">CurveEntity</a></li><li data-name="CylinderCombine" ><a href="CylinderCombine.html">CylinderCombine</a></li><li data-name="CylinderEntity" title="圆锥  Entity对象" ><a href="CylinderEntity.html">CylinderEntity</a></li><li data-name="CylinderPrimitive" title="圆锥 Primitive图元矢量对象" ><a href="CylinderPrimitive.html">CylinderPrimitive</a></li><li data-name="CylinderStyleConver" title="Cylinder 矢量数据style转换处理类" ><a href="CylinderStyleConver.html">CylinderStyleConver</a></li><li data-name="CylinderWaveMaterial" title="圆锥 波纹扩散效果 材质" ><a href="CylinderWaveMaterial.html">CylinderWaveMaterial</a></li><li data-name="CylinderWaveMaterialProperty" title="圆锥 波纹扩散效果 材质属性" ><a href="CylinderWaveMaterialProperty.html">CylinderWaveMaterialProperty</a></li><li data-name="CzmGeoJsonLayer" title="GeoJSON数据图层(ceisum原生)，该类中矢量数据是使用ceisum原生方法加载的entity对象。" ><a href="CzmGeoJsonLayer.html">CzmGeoJsonLayer</a></li><li data-name="CzmlLayer" title="CZML数据图层" ><a href="CzmlLayer.html">CzmlLayer</a></li><li data-name="DepthOfFieldEffect" title="景深" ><a href="DepthOfFieldEffect.html">DepthOfFieldEffect</a></li><li data-name="DiffuseWall" title="立体面(或圆)散射效果 矢量对象" ><a href="DiffuseWall.html">DiffuseWall</a></li><li data-name="DigitalFlowMaterialProperty" title="数字流动线 材质(可用于PlaneEntity)" ><a href="DigitalFlowMaterialProperty.html">DigitalFlowMaterialProperty</a></li><li data-name="DistanceLegend" title="比例尺 控件" ><a href="DistanceLegend.html">DistanceLegend</a></li><li data-name="DistanceMeasure" title="距离量算对象，" ><a href="DistanceMeasure.html">DistanceMeasure</a></li><li data-name="DistanceSurfaceMeasure" title="贴地距离量算对象" ><a href="DistanceSurfaceMeasure.html">DistanceSurfaceMeasure</a></li><li data-name="DivBillboardEntity" title="HTML转图片后的 图标点Entity，" ><a href="DivBillboardEntity.html">DivBillboardEntity</a></li><li data-name="DivBoderLabel" title="动态边框文本 DIV点" ><a href="DivBoderLabel.html">DivBoderLabel</a></li><li data-name="DivGraphic" title="DIV点" ><a href="DivGraphic.html">DivGraphic</a></li><li data-name="DivGraphicStyleConver" title="DivGraphic 矢量数据style转换处理类" ><a href="DivGraphicStyleConver.html">DivGraphicStyleConver</a></li><li data-name="DivLightPoint" title="动画的扩散div点" ><a href="DivLightPoint.html">DivLightPoint</a></li><li data-name="DivUpLabel" title="竖立的文本 DIV点" ><a href="DivUpLabel.html">DivUpLabel</a></li><li data-name="DomUtil" title="DOM操作 相关静态方法类" ><a href="DomUtil.html">DomUtil</a></li><li data-name="DoubleArrow" title="双箭头（钳击）  Entity矢量数据" ><a href="DoubleArrow.html">DoubleArrow</a></li><li data-name="DoubleSidedPlane" title="双面渲染图片平面 Primitive图元矢量对象" ><a href="DoubleSidedPlane.html">DoubleSidedPlane</a></li><li data-name="DrawUtil" title="矢量数据标绘编辑相关常量" ><a href="DrawUtil.html">DrawUtil</a></li><li data-name="DynamicRiver" title="动态河流 矢量对象" ><a href="DynamicRiver.html">DynamicRiver</a></li><li data-name="EchartsLayer" title="Echarts图层，" ><a href="EchartsLayer.html">EchartsLayer</a></li><li data-name="EditBase" title="标绘处理对应的编辑基类" ><a href="EditBase.html">EditBase</a></li><li data-name="EditBox" title="BoxEntity对象，标绘处理对应的编辑类" ><a href="EditBox.html">EditBox</a></li><li data-name="EditCircle" title="Circle对象 标绘处理对应的编辑类" ><a href="EditCircle.html">EditCircle</a></li><li data-name="EditCorridor" title="Corridor对象 标绘处理对应的编辑类" ><a href="EditCorridor.html">EditCorridor</a></li><li data-name="EditCylinder" title="Cylinder对象 标绘处理对应的编辑类" ><a href="EditCylinder.html">EditCylinder</a></li><li data-name="EditDivGraphic" title="DivGraphic对象，标绘处理对应的编辑类" ><a href="EditDivGraphic.html">EditDivGraphic</a></li><li data-name="EditEllipsoid" title="Ellipsoid对象 标绘处理对应的编辑类" ><a href="EditEllipsoid.html">EditEllipsoid</a></li><li data-name="EditModel" title="Model对象 标绘处理对应的编辑类" ><a href="EditModel.html">EditModel</a></li><li data-name="EditPlane" title="Plane对象 标绘处理对应的编辑类" ><a href="EditPlane.html">EditPlane</a></li><li data-name="EditPoint" title="Point 对象 标绘处理对应的编辑类" ><a href="EditPoint.html">EditPoint</a></li><li data-name="EditPointType" title="矢量对象编辑时 拖拽点类型" ><a href="global.html#EditPointType">EditPointType</a></li><li data-name="EditPoly" title="线面状对象 标绘处理对应的编辑类基类" ><a href="EditPoly.html">EditPoly</a></li><li data-name="EditPolygon" title="Polygon对象 标绘处理对应的编辑类" ><a href="EditPolygon.html">EditPolygon</a></li><li data-name="EditPolygonGrid" title="Polygon对象Grid视频编辑 标绘处理对应的编辑类" ><a href="EditPolygonGrid.html">EditPolygonGrid</a></li><li data-name="EditPolylineVolume" title="PolylineVolume对象 标绘处理对应的编辑类" ><a href="EditPolylineVolume.html">EditPolylineVolume</a></li><li data-name="EditRectangle" title="Rectangle对象 标绘处理对应的编辑类，" ><a href="EditRectangle.html">EditRectangle</a></li><li data-name="EditRegular" title="Regular对象 标绘处理对应的编辑类" ><a href="EditRegular.html">EditRegular</a></li><li data-name="EditSector" title="Sector对象 标绘处理对应的编辑类" ><a href="EditSector.html">EditSector</a></li><li data-name="EditTileset" title="3dtiles对象 标绘处理对应的编辑类" ><a href="EditTileset.html">EditTileset</a></li><li data-name="EditVideo2D" title="Video2D对象 标绘处理对应的编辑类" ><a href="EditVideo2D.html">EditVideo2D</a></li><li data-name="EditWall" title="Wall对象 标绘处理对应的编辑类，" ><a href="EditWall.html">EditWall</a></li><li data-name="EffectType" title="特效类型" ><a href="global.html#EffectType">EffectType</a></li><li data-name="EffectUtil" title="特效相关 静态方法" ><a href="EffectUtil.html">EffectUtil</a></li><li data-name="EllipseEntity" title="椭圆、椭圆柱  Entity对象" ><a href="EllipseEntity.html">EllipseEntity</a></li><li data-name="EllipsoidCombine" ><a href="EllipsoidCombine.html">EllipsoidCombine</a></li><li data-name="EllipsoidElectricMaterialProperty" title="球体: 电弧球体效果  材质" ><a href="EllipsoidElectricMaterialProperty.html">EllipsoidElectricMaterialProperty</a></li><li data-name="EllipsoidEntity" title="球、半球、椭球  Entity对象" ><a href="EllipsoidEntity.html">EllipsoidEntity</a></li><li data-name="EllipsoidPrimitive" title="球体 Primitive图元矢量对象" ><a href="EllipsoidPrimitive.html">EllipsoidPrimitive</a></li><li data-name="EllipsoidStyleConver" title="Ellipsoid 矢量数据style转换处理类" ><a href="EllipsoidStyleConver.html">EllipsoidStyleConver</a></li><li data-name="EllipsoidWaveMaterialProperty" title="球体: 波纹球体效果  材质" ><a href="EllipsoidWaveMaterialProperty.html">EllipsoidWaveMaterialProperty</a></li><li data-name="EmptyTileLayer" title="空白图层，目前主要在Lod矢量数据加载作为事件触发使用。" ><a href="EmptyTileLayer.html">EmptyTileLayer</a></li><li data-name="EventType" title="事件类型 枚举（所有事件统一的入口）" ><a href="global.html#EventType">EventType</a></li><li data-name="FillStyle" title="S3M图层填充风格." ><a href="FillStyle.html">FillStyle</a></li><li data-name="FineArrow" title="直箭头(2个点)   Entity矢量数据" ><a href="FineArrow.html">FineArrow</a></li><li data-name="FineArrowYW" title="燕尾直箭头(2个点)   Entity矢量数据" ><a href="FineArrowYW.html">FineArrowYW</a></li><li data-name="FirstPersonRoam" title="第一人称贴地漫游，" ><a href="FirstPersonRoam.html">FirstPersonRoam</a></li><li data-name="FixedRoute" title="FixedRoute" ><a href="FixedRoute.html">FixedRoute</a></li><li data-name="FlatBillboard" title="平放的图标 数据集合 (多个图标一起合并渲染)" ><a href="FlatBillboard.html">FlatBillboard</a></li><li data-name="FlickerEntity" title="定时闪烁高亮Entity（点、线、面）" ><a href="FlickerEntity.html">FlickerEntity</a></li><li data-name="FloodByGraphic" title="淹没分析，" ><a href="FloodByGraphic.html">FloodByGraphic</a></li><li data-name="FloodByMaterial" title="淹没分析 ，" ><a href="FloodByMaterial.html">FloodByMaterial</a></li><li data-name="FogEffect" title="雾场景效果" ><a href="FogEffect.html">FogEffect</a></li><li data-name="FontBillboardEntity" title="Font CSS字体点转图片后的图标点  Entity," ><a href="FontBillboardEntity.html">FontBillboardEntity</a></li><li data-name="FrustumCombine" title="大数据 四棱锥体 集合 (合并渲染) Primitive图元 矢量对象" ><a href="FrustumCombine.html">FrustumCombine</a></li><li data-name="FrustumPrimitive" title="四棱锥体  Primitive图元矢量对象" ><a href="FrustumPrimitive.html">FrustumPrimitive</a></li><li data-name="FullscreenButton" title="全屏按钮 控件 (Cesium原生)" ><a href="FullscreenButton.html">FullscreenButton</a></li><li data-name="GaodeLayer" ><a href="GaodeLayer.html">GaodeLayer</a></li><li data-name="GaodePOI" title="高德 POI查询 工具类，" ><a href="GaodePOI.html">GaodePOI</a></li><li data-name="GaodeRoute" title="高德 路径规划  工具类，" ><a href="GaodeRoute.html">GaodeRoute</a></li><li data-name="GatheringPlace" title="集结地(3个点)   Entity矢量数据" ><a href="GatheringPlace.html">GatheringPlace</a></li><li data-name="GeeLayer" ><a href="GeeLayer.html">GeeLayer</a></li><li data-name="GeminiArray" title="自定义集合存储管理类" ><a href="GeminiArray.html">GeminiArray</a></li><li data-name="Geocoder" title="地名查找按钮 控件 (Cesium原生)" ><a href="Geocoder.html">Geocoder</a></li><li data-name="GeodePoiLayer" title="高德在线POI图层" ><a href="GeodePoiLayer.html">GeodePoiLayer</a></li><li data-name="GeoJsonLayer" title="加载展示 GeoJSON数据 的图层" ><a href="GeoJsonLayer.html">GeoJsonLayer</a></li><li data-name="getSlope_callback" title="异步计算完成所有点的坡度坡向后 的回调方法" ><a href="global.html#getSlope_callback">getSlope_callback</a></li><li data-name="getSlope_endItem" title="异步计算中，每计算完成1个点的坡度坡向后 的回调方法" ><a href="global.html#getSlope_endItem">getSlope_endItem</a></li><li data-name="Globe" title="全局JsDoc变量 (只是注释使用，非gemini变量)" ><a href="Globe.html">Globe</a></li><li data-name="GoogleLayer" ><a href="GoogleLayer.html">GoogleLayer</a></li><li data-name="GraphicGroupLayer" title="矢量数据图层组，主要用于 多图层的标绘" ><a href="GraphicGroupLayer.html">GraphicGroupLayer</a></li><li data-name="GraphicLayer" title="矢量数据图层" ><a href="GraphicLayer.html">GraphicLayer</a></li><li data-name="GraphicType" title="矢量数据类型" ><a href="global.html#GraphicType">GraphicType</a></li><li data-name="GraphicUtil" title="矢量数据 相关静态方法" ><a href="GraphicUtil.html">GraphicUtil</a></li><li data-name="GraticuleLayer" title="经纬网" ><a href="GraticuleLayer.html">GraticuleLayer</a></li><li data-name="GridLayer" ><a href="GridLayer.html">GridLayer</a></li><li data-name="GroundSkyBox" title="近地天空盒, 在场景周围绘制星星等太空背景。" ><a href="GroundSkyBox.html">GroundSkyBox</a></li><li data-name="GroupGraphic" title="group组对象,可用于矢量数据树结构的虚拟节点" ><a href="GroupGraphic.html">GroupGraphic</a></li><li data-name="GroupLayer" title="图层组，可以用于将多个图层组合起来方便控制（比如将 卫星底图 和 文字注记层 放在一起控制管理），或用于 图层管理 的图层分组节点（虚拟节点）。" ><a href="GroupLayer.html">GroupLayer</a></li><li data-name="GroupThing" title="Thing对象(如特效、分析、管理类等)组，可以用于将多个Thing对象组合起来方便控制" ><a href="GroupThing.html">GroupThing</a></li><li data-name="HeatLayer" title="热力图图层，基于heatmap.js库渲染。" ><a href="HeatLayer.html">HeatLayer</a></li><li data-name="HeightMeasure" title="高度量算对象，" ><a href="HeightMeasure.html">HeightMeasure</a></li><li data-name="HeightTriangleMeasure" title="三角高度量算对象，" ><a href="HeightTriangleMeasure.html">HeightTriangleMeasure</a></li><li data-name="HomeButton" title="全屏按钮 控件 (Cesium原生)" ><a href="HomeButton.html">HomeButton</a></li><li data-name="I3SLayer" title="I3S 三维模型图层。" ><a href="I3SLayer.html">I3SLayer</a></li><li data-name="Icon" title="SDK内部使用的一些图标配置，方便外部覆盖(建议Map构造前覆盖)。" ><a href="global.html#Icon">Icon</a></li><li data-name="Image2MaterialProperty" title="通用：图片 材质2  材质属性,  没有加载完成前的白色闪烁，但也不支持纯白色的图片" ><a href="Image2MaterialProperty.html">Image2MaterialProperty</a></li><li data-name="ImageLayer" ><a href="ImageLayer.html">ImageLayer</a></li><li data-name="ImageOptsConver" title="图片材质 转换处理类" ><a href="ImageOptsConver.html">ImageOptsConver</a></li><li data-name="InvertedEffect" title="倒影效果" ><a href="InvertedEffect.html">InvertedEffect</a></li><li data-name="IonLayer" ><a href="IonLayer.html">IonLayer</a></li><li data-name="IsosTriangle" title="等腰三角形(3个点)  Entity矢量数据" ><a href="IsosTriangle.html">IsosTriangle</a></li><li data-name="KeyboardRoam" title="键盘漫游控制类" ><a href="KeyboardRoam.html">KeyboardRoam</a></li><li data-name="KmlLayer" title="KML数据图层" ><a href="KmlLayer.html">KmlLayer</a></li><li data-name="LabelEntity" ><a href="LabelEntity.html">LabelEntity</a></li><li data-name="LabelPrimitive" title="文字 Primitive矢量数据" ><a href="LabelPrimitive.html">LabelPrimitive</a></li><li data-name="LabelStyleConver" title="Label 矢量数据style转换处理类" ><a href="LabelStyleConver.html">LabelStyleConver</a></li><li data-name="Lang" title="多语种文本配置，" ><a href="global.html#Lang">Lang</a></li><li data-name="LayerType" title="图层类型" ><a href="global.html#LayerType">LayerType</a></li><li data-name="LayerUtil" title="图层相关 静态方法" ><a href="LayerUtil.html">LayerUtil</a></li><li data-name="LightCone" title="光锥体" ><a href="LightCone.html">LightCone</a></li><li data-name="LimitHeight" title="模型限高分析" ><a href="LimitHeight.html">LimitHeight</a></li><li data-name="LineBloomMaterialProperty" title="线状: 泛光线 材质" ><a href="LineBloomMaterialProperty.html">LineBloomMaterialProperty</a></li><li data-name="LineCrossMaterialProperty" title="线状: 十字形间隔线 材质" ><a href="LineCrossMaterialProperty.html">LineCrossMaterialProperty</a></li><li data-name="LineDotDashMaterialProperty" title="线状: 泛光线 材质" ><a href="LineDotDashMaterialProperty.html">LineDotDashMaterialProperty</a></li><li data-name="LineFlickerMaterialProperty" title="线状: 闪烁线 材质" ><a href="LineFlickerMaterialProperty.html">LineFlickerMaterialProperty</a></li><li data-name="LineFlowColorMaterialProperty" title="线状 流动效果 材质" ><a href="LineFlowColorMaterialProperty.html">LineFlowColorMaterialProperty</a></li><li data-name="LineFlowMaterialProperty" title="线状 流动效果 材质" ><a href="LineFlowMaterialProperty.html">LineFlowMaterialProperty</a></li><li data-name="LineThreeDashMaterialProperty" title="线状: 三条平行虚线 材质" ><a href="LineThreeDashMaterialProperty.html">LineThreeDashMaterialProperty</a></li><li data-name="LineTrailMaterialProperty" title="线状: 轨迹线 材质" ><a href="LineTrailMaterialProperty.html">LineTrailMaterialProperty</a></li><li data-name="LngLatArray" title="坐标数组处理类" ><a href="LngLatArray.html">LngLatArray</a></li><li data-name="LngLatPoint" title="坐标点类（含经度、纬度、高度）" ><a href="LngLatPoint.html">LngLatPoint</a></li><li data-name="LocalWorldTransform" title="局部坐标系 与 世界坐标系 转换控制类" ><a href="LocalWorldTransform.html">LocalWorldTransform</a></li><li data-name="LocationBar" title="信息状态栏, 一般在页面下侧区域，包括鼠标经纬度等信息" ><a href="LocationBar.html">LocationBar</a></li><li data-name="LodGraphicLayer" title="矢量数据LOD分层分块加载类" ><a href="LodGraphicLayer.html">LodGraphicLayer</a></li><li data-name="Log" title="SDK内部统一调用console.* 打印日志的控制类，在外部可以按需开启和关闭。" ><a href="Log.html">Log</a></li><li data-name="Lune" title="弓形面(3个点)   Entity矢量数据" ><a href="Lune.html">Lune</a></li><li data-name="Map" title="地图类 ，这是构造三维地球的一切的开始起点。" ><a href="Map.html">Map</a></li><li data-name="MapboxLayer" ><a href="MapboxLayer.html">MapboxLayer</a></li><li data-name="MapCompare" title="地图分屏对比 控件，" ><a href="MapCompare.html">MapCompare</a></li><li data-name="MapSplit" title="卷帘对比 控件" ><a href="MapSplit.html">MapSplit</a></li><li data-name="MapVLayer" title="MapV图层" ><a href="MapVLayer.html">MapVLayer</a></li><li data-name="MaterialType" title="材质 类型枚举" ><a href="MaterialType.html">MaterialType</a></li><li data-name="MaterialUtil" title="矢量数据材质" ><a href="MaterialUtil.html">MaterialUtil</a></li><li data-name="MatrixMove" title="坐标点按XYZ轴平移图上编辑处理类" ><a href="MatrixMove.html">MatrixMove</a></li><li data-name="MatrixMove2" title="坐标点按XYZ轴平移图上编辑处理类" ><a href="MatrixMove2.html">MatrixMove2</a></li><li data-name="MatrixRotate" title="按XYZ轴旋转方向图上编辑处理类" ><a href="MatrixRotate.html">MatrixRotate</a></li><li data-name="Measure" title="图上量算" ><a href="Measure.html">Measure</a></li><li data-name="MeasureUtil" title="图上量算 的 常用静态方法" ><a href="MeasureUtil.html">MeasureUtil</a></li><li data-name="ModelEntity" title="gltf小模型  Entity对象" ><a href="ModelEntity.html">ModelEntity</a></li><li data-name="ModelPlanClip" title="Gltf模型剖切，" ><a href="ModelPlanClip.html">ModelPlanClip</a></li><li data-name="ModelPrimitive" title="gltf小模型 Primitive图元矢量对象" ><a href="ModelPrimitive.html">ModelPrimitive</a></li><li data-name="ModelStyleConver" title="Model 矢量数据style转换处理类" ><a href="ModelStyleConver.html">ModelStyleConver</a></li><li data-name="MosaicEffect" title="马赛克效果" ><a href="MosaicEffect.html">MosaicEffect</a></li><li data-name="MouseDownView" title="鼠标滚轮缩放美化样式(指示图标)控件" ><a href="MouseDownView.html">MouseDownView</a></li><li data-name="MouseEvent" title="地图鼠标事件 统一管理类，由Map内部创建" ><a href="MouseEvent.html">MouseEvent</a></li><li data-name="MoveType" title="相机旋转的类型" ><a href="global.html#MoveType">MoveType</a></li><li data-name="MultipleSkyBox" title="3个天空盒（可以平滑过度）, 在场景周围绘制星星等太空背景。" ><a href="MultipleSkyBox.html">MultipleSkyBox</a></li><li data-name="MvtLayer" title="解析并加载MVT(Mapbox Vector Tiles)矢量切片数据, 使用ol.MVT类作为解析PBF文件的方式, 使用graphc.Combine类作为要素的加载方式" ><a href="MvtLayer.html">MvtLayer</a></li><li data-name="MvtLayer2" title="解析并加载MVT(Mapbox Vector Tiles)矢量切片数据, 使用ol.MVT类作为解析PBF文件的方式, 使用primitiveCollection类作为要素的加载方式" ><a href="MvtLayer2.html">MvtLayer2</a></li><li data-name="NavigationHelpButton" title="帮助按钮 控件 (Cesium原生)" ><a href="NavigationHelpButton.html">NavigationHelpButton</a></li><li data-name="NeonLightMaterialProperty" title="面状: 霓虹灯材质" ><a href="NeonLightMaterialProperty.html">NeonLightMaterialProperty</a></li><li data-name="NightVisionEffect" title="夜视效果" ><a href="NightVisionEffect.html">NightVisionEffect</a></li><li data-name="ODLineMaterialProperty" title="线状 OD线效果 材质" ><a href="ODLineMaterialProperty.html">ODLineMaterialProperty</a></li><li data-name="OsmBuildingsLayer" title="OSM在线 建筑物模型" ><a href="OsmBuildingsLayer.html">OsmBuildingsLayer</a></li><li data-name="OsmLayer" ><a href="OsmLayer.html">OsmLayer</a></li><li data-name="OutlineEffect" title="对象轮廓描边效果" ><a href="OutlineEffect.html">OutlineEffect</a></li><li data-name="OverviewMap" title="鹰眼地图 控件" ><a href="OverviewMap.html">OverviewMap</a></li><li data-name="ParticleSystem" title="粒子效果 对象，该对象暂不支持鼠标交互和拾取" ><a href="ParticleSystem.html">ParticleSystem</a></li><li data-name="PathEntity" title="path路径  Entity矢量数据" ><a href="PathEntity.html">PathEntity</a></li><li data-name="PathStyleConver" title="Path 矢量数据style转换处理类" ><a href="PathStyleConver.html">PathStyleConver</a></li><li data-name="PBFState" title="矢量切片的状态 枚举" ><a href="global.html#PBFState">PBFState</a></li><li data-name="Pit" title="井 矢量对象" ><a href="Pit.html">Pit</a></li><li data-name="PitEntity" title="井(Entity方式) 矢量对象" ><a href="PitEntity.html">PitEntity</a></li><li data-name="PlaneCombine" ><a href="PlaneCombine.html">PlaneCombine</a></li><li data-name="PlaneEntity" ><a href="PlaneEntity.html">PlaneEntity</a></li><li data-name="PlanePrimitive" title="平面 Primitive图元矢量对象" ><a href="PlanePrimitive.html">PlanePrimitive</a></li><li data-name="PlaneStyleConver" title="Plane 矢量数据style转换处理类" ><a href="PlaneStyleConver.html">PlaneStyleConver</a></li><li data-name="PointEntity" title="像素点 Entity对象" ><a href="PointEntity.html">PointEntity</a></li><li data-name="PointLight" title="点光源 矢量对象，该对象暂不支持鼠标交互和拾取" ><a href="PointLight.html">PointLight</a></li><li data-name="PointMeasure" title="坐标量算对象，" ><a href="PointMeasure.html">PointMeasure</a></li><li data-name="PointPrimitive" title="像素点 Primitive矢量数据" ><a href="PointPrimitive.html">PointPrimitive</a></li><li data-name="PointStyleConver" title="Point 矢量数据style转换处理类" ><a href="PointStyleConver.html">PointStyleConver</a></li><li data-name="PointTrans" title="坐标点的转换 相关静态方法。" ><a href="PointTrans.html">PointTrans</a></li><li data-name="PointUtil" title="单个坐标或位置矩阵相关的处理 静态方法" ><a href="PointUtil.html">PointUtil</a></li><li data-name="PointVisibility" title="圆形可视域区域分析 矢量对象，该对象暂不支持鼠标交互和拾取" ><a href="PointVisibility.html">PointVisibility</a></li><li data-name="PolyAsphaltMaterialProperty" title="面状： 柏油路面效果 材质" ><a href="PolyAsphaltMaterialProperty.html">PolyAsphaltMaterialProperty</a></li><li data-name="PolyBlobMaterialProperty" title="面状：混合 材质" ><a href="PolyBlobMaterialProperty.html">PolyBlobMaterialProperty</a></li><li data-name="PolyFacetMaterialProperty" title="面状：碎石面 材质" ><a href="PolyFacetMaterialProperty.html">PolyFacetMaterialProperty</a></li><li data-name="PolygonCombine" ><a href="PolygonCombine.html">PolygonCombine</a></li><li data-name="PolygonEntity" title="面  Entity矢量数据" ><a href="PolygonEntity.html">PolygonEntity</a></li><li data-name="PolygonPrimitive" title="面  Primitive图元 矢量对象" ><a href="PolygonPrimitive.html">PolygonPrimitive</a></li><li data-name="PolygonStyleConver" title="Polygon 矢量数据style转换处理类" ><a href="PolygonStyleConver.html">PolygonStyleConver</a></li><li data-name="PolyGradientMaterialProperty" title="面状： 渐变面 材质" ><a href="PolyGradientMaterialProperty.html">PolyGradientMaterialProperty</a></li><li data-name="PolyGrassMaterialProperty" title="面状：草地面 材质" ><a href="PolyGrassMaterialProperty.html">PolyGrassMaterialProperty</a></li><li data-name="PolylineCombine" ><a href="PolylineCombine.html">PolylineCombine</a></li><li data-name="PolylineEntity" title="线  Entity矢量数据" ><a href="PolylineEntity.html">PolylineEntity</a></li><li data-name="PolylinePrimitive" ><a href="PolylinePrimitive.html">PolylinePrimitive</a></li><li data-name="PolylineStyleConver" title="Polyline 矢量数据style转换处理类" ><a href="PolylineStyleConver.html">PolylineStyleConver</a></li><li data-name="PolylineVolumeCombine" ><a href="PolylineVolumeCombine.html">PolylineVolumeCombine</a></li><li data-name="PolylineVolumeEntity" title="管道线  Entity矢量数据" ><a href="PolylineVolumeEntity.html">PolylineVolumeEntity</a></li><li data-name="PolylineVolumePrimitive" title="管道线  Primitive图元 矢量对象" ><a href="PolylineVolumePrimitive.html">PolylineVolumePrimitive</a></li><li data-name="PolylineVolumeStyleConver" title="PolylineVolume 矢量数据style转换处理类" ><a href="PolylineVolumeStyleConver.html">PolylineVolumeStyleConver</a></li><li data-name="PolyUtil" title="多个点 或 线面数据 相关处理 静态方法" ><a href="PolyUtil.html">PolyUtil</a></li><li data-name="PolyWoodMaterialProperty" title="面状：混合 材质" ><a href="PolyWoodMaterialProperty.html">PolyWoodMaterialProperty</a></li><li data-name="Popup" title="鼠标单击弹窗面板对象div点" ><a href="Popup.html">Popup</a></li><li data-name="ProjectionPicker" title="投影切换按钮 控件 (Cesium原生)" ><a href="ProjectionPicker.html">ProjectionPicker</a></li><li data-name="QuadtreePrimitive" title="四叉树瓦片的提供程序" ><a href="QuadtreePrimitive_QuadtreePrimitive.html">QuadtreePrimitive</a></li><li data-name="QueryArcServer" title="ArcGIS WFS矢量服务查询类" ><a href="QueryArcServer.html">QueryArcServer</a></li><li data-name="QueryGeoServer" title="GeoServer WFS服务查询类" ><a href="QueryGeoServer.html">QueryGeoServer</a></li><li data-name="RadarLineMaterialProperty" title="圆形: 雷达线(圆+旋转半径线) 材质" ><a href="RadarLineMaterialProperty.html">RadarLineMaterialProperty</a></li><li data-name="RadarWaveMaterialProperty" title="圆形: 雷达线(圆+旋转半径线) 材质" ><a href="RadarWaveMaterialProperty.html">RadarWaveMaterialProperty</a></li><li data-name="RainEffect" title="雨天气 效果" ><a href="RainEffect.html">RainEffect</a></li><li data-name="RectangleCombine" title="大数据矩形集合 (合并渲染) Primitive图元 矢量对象" ><a href="RectangleCombine.html">RectangleCombine</a></li><li data-name="RectangleEntity" title="矩形  Entity矢量数据" ><a href="RectangleEntity.html">RectangleEntity</a></li><li data-name="RectanglePrimitive" title="矩形  Primitive图元 矢量对象" ><a href="RectanglePrimitive.html">RectanglePrimitive</a></li><li data-name="RectangleStyleConver" title="Rectangle 矢量数据style转换处理类" ><a href="RectangleStyleConver.html">RectangleStyleConver</a></li><li data-name="RectangularSensor" ><a href="RectangularSensor.html">RectangularSensor</a></li><li data-name="RectangularSensorStyleConver" title="RectangularSensor 矢量数据style转换处理类" ><a href="RectangularSensorStyleConver.html">RectangularSensorStyleConver</a></li><li data-name="RectSlideMaterialProperty" title="矩形面： 轮播图  材质" ><a href="RectSlideMaterialProperty.html">RectSlideMaterialProperty</a></li><li data-name="ReflectionWater" title="反射水面(显示模型倒影) Primitive图元 矢量对象, 目前仅支持少量数据（多了就卡）" ><a href="ReflectionWater.html">ReflectionWater</a></li><li data-name="Regular" title="正多边形  Entity矢量数据" ><a href="Regular.html">Regular</a></li><li data-name="Road" title="道路  矢量对象" ><a href="Road.html">Road</a></li><li data-name="RotateOut" title="相机位置不动，对外四周旋转" ><a href="RotateOut.html">RotateOut</a></li><li data-name="RotatePoint" title="相机绕 固定中心点 旋转" ><a href="RotatePoint.html">RotatePoint</a></li><li data-name="Route" title="Route" ><a href="Route.html">Route</a></li><li data-name="S3MLayer" title="S3M图层" ><a href="S3MLayer.html">S3MLayer</a></li><li data-name="ScanLineMaterialProperty" title="面状: 用于面状对象的 扫描线放大效果 材质属性" ><a href="ScanLineMaterialProperty.html">ScanLineMaterialProperty</a></li><li data-name="SceneModePicker" title="二三维切换按钮 控件 (Cesium原生)" ><a href="SceneModePicker.html">SceneModePicker</a></li><li data-name="ScrollWall" title="走马灯围墙效果 矢量对象" ><a href="ScrollWall.html">ScrollWall</a></li><li data-name="SectionMeasure" title="剖面量算对象" ><a href="SectionMeasure.html">SectionMeasure</a></li><li data-name="Sector" title="扇形(3个点)  Entity矢量数据" ><a href="Sector.html">Sector</a></li><li data-name="Shadows" title="日照分析" ><a href="Shadows.html">Shadows</a></li><li data-name="Sightline" title="通视分析" ><a href="Sightline.html">Sightline</a></li><li data-name="SkyEffect" title="基于UE实现地面大气、天空视图效果的改造" ><a href="SkyEffect.html">SkyEffect</a></li><li data-name="Skyline" title="天际线描边" ><a href="Skyline.html">Skyline</a></li><li data-name="SkylineBody" title="SkylineBody" ><a href="SkylineBody.html">SkylineBody</a></li><li data-name="Slope" title="坡度坡向分析" ><a href="Slope.html">Slope</a></li><li data-name="SnowCoverEffect" title="地面积雪 效果" ><a href="SnowCoverEffect.html">SnowCoverEffect</a></li><li data-name="SnowEffect" title="雪天气 效果" ><a href="SnowEffect.html">SnowEffect</a></li><li data-name="SpotLight" title="聚光灯 矢量对象，该对象暂不支持鼠标交互和拾取" ><a href="SpotLight.html">SpotLight</a></li><li data-name="State" title="状态 枚举" ><a href="global.html#State">State</a></li><li data-name="StraightArrow" title="直箭头(3个点)   Entity矢量数据" ><a href="StraightArrow.html">StraightArrow</a></li><li data-name="StreetView" title="街景视角模式控制," ><a href="StreetView.html">StreetView</a></li><li data-name="TdtDmLayer" title="天地图 三维地名服务图层" ><a href="TdtDmLayer.html">TdtDmLayer</a></li><li data-name="TdtLayer" ><a href="TdtLayer.html">TdtLayer</a></li><li data-name="TdtPOI" title="天地图 POI查询 工具类，" ><a href="TdtPOI.html">TdtPOI</a></li><li data-name="TdtTerrainProvider" title="天地图 地形服务" ><a href="TdtTerrainProvider.html">TdtTerrainProvider</a></li><li data-name="TencentLayer" ><a href="TencentLayer.html">TencentLayer</a></li><li data-name="TerrainClip" title="地形开挖，" ><a href="TerrainClip.html">TerrainClip</a></li><li data-name="TerrainEditBase" title="地形编辑 基础类 （包括：压平、抬升、开挖、淹没 等）" ><a href="TerrainEditBase.html">TerrainEditBase</a></li><li data-name="TerrainFlat" title="地形压平" ><a href="TerrainFlat.html">TerrainFlat</a></li><li data-name="TerrainLayer" title="地形服务图层，一个地图中只会生效一个地形服务图层（单选）" ><a href="TerrainLayer.html">TerrainLayer</a></li><li data-name="TerrainPlanClip" title="地形开挖 ，" ><a href="TerrainPlanClip.html">TerrainPlanClip</a></li><li data-name="TerrainType" title="地形类型" ><a href="global.html#TerrainType">TerrainType</a></li><li data-name="TerrainUplift" title="地形抬升" ><a href="TerrainUplift.html">TerrainUplift</a></li><li data-name="Tetrahedron" title="四面体（顶部正方形+倒立的三角椎体）" ><a href="Tetrahedron.html">Tetrahedron</a></li><li data-name="TextMaterial" title="文字贴图 primitive材质" ><a href="TextMaterial.html">TextMaterial</a></li><li data-name="TextMaterialProperty" title="文字贴图 entity材质" ><a href="TextMaterialProperty.html">TextMaterialProperty</a></li><li data-name="ThickWall" title="有厚度的围墙效果 矢量对象" ><a href="ThickWall.html">ThickWall</a></li><li data-name="ThingType" title="Thing对象(如分析、管理类等) 类型 【提示：仅与地图一对一的类型，非所有Thing类】" ><a href="global.html#ThingType">ThingType</a></li><li data-name="ThingUtil" title="Thing对象(如 分析、管理类等)  相关 静态方法" ><a href="ThingUtil.html">ThingUtil</a></li><li data-name="TileInfoLayer" ><a href="TileInfoLayer.html">TileInfoLayer</a></li><li data-name="TilesetBoxClip" title="3dtiles模型box盒子裁剪，" ><a href="TilesetBoxClip.html">TilesetBoxClip</a></li><li data-name="TilesetClip" title="3dtiles模型裁剪" ><a href="TilesetClip.html">TilesetClip</a></li><li data-name="TilesetEditBase" title="3dtiles模型分析（裁剪、压平、淹没） 基础类" ><a href="TilesetEditBase.html">TilesetEditBase</a></li><li data-name="TilesetFlat" title="3dtiles模型压平" ><a href="TilesetFlat.html">TilesetFlat</a></li><li data-name="TilesetFlood" title="3dtiles模型淹没分析" ><a href="TilesetFlood.html">TilesetFlood</a></li><li data-name="TilesetLayer" title="3dtiles 三维模型图层。" ><a href="TilesetLayer.html">TilesetLayer</a></li><li data-name="TilesetPlanClip" title="3dtiles模型裁剪，" ><a href="TilesetPlanClip.html">TilesetPlanClip</a></li><li data-name="TilesetShake" title="3dtiles模型 模拟地震晃动的效果" ><a href="TilesetShake.html">TilesetShake</a></li><li data-name="Timeline" title="时间线 控件 (Cesium原生)" ><a href="Timeline.html">Timeline</a></li><li data-name="TmsLayer" ><a href="TmsLayer.html">TmsLayer</a></li><li data-name="Token" title="SDK中涉及到的所有第3方地图服务的Token令牌key，" ><a href="Token.html">Token</a></li><li data-name="ToolButton" title="工具栏 单个按钮控件" ><a href="ToolButton.html">ToolButton</a></li><li data-name="Tooltip" title="鼠标移入弹窗对象div点" ><a href="Tooltip.html">Tooltip</a></li><li data-name="Underground" title="地下模式" ><a href="Underground.html">Underground</a></li><li data-name="updateMatModel" title="根据插入点和底部高程计算模型矩阵" ><a href="global.html#updateMatModel">updateMatModel</a></li><li data-name="URI" title="Constructs a URI object." ><a href="URI.html">URI</a></li><li data-name="Util" title="常用静态方法" ><a href="Util.html">Util</a></li><li data-name="Video2D" title="视频融合（投射2D平面）," ><a href="Video2D.html">Video2D</a></li><li data-name="Video3D" title="视频融合（投射3D，贴物体表面），该对象暂不支持鼠标交互和拾取" ><a href="Video3D.html">Video3D</a></li><li data-name="VideoPrimitive" title="视频面  Primitive图元 矢量对象" ><a href="VideoPrimitive.html">VideoPrimitive</a></li><li data-name="ViewDome" title="开敞度分析" ><a href="ViewDome.html">ViewDome</a></li><li data-name="ViewShed" title="可视域 矢量对象，该对象暂不支持鼠标交互和拾取" ><a href="ViewShed.html">ViewShed</a></li><li data-name="VolumeCloud" title="体渲染气象云 矢量对象，该对象暂不支持鼠标交互和拾取" ><a href="VolumeCloud.html">VolumeCloud</a></li><li data-name="VolumeDepthMeasure" title="基于深度图的 体积量算对象（方量分析），" ><a href="VolumeDepthMeasure.html">VolumeDepthMeasure</a></li><li data-name="VolumeMeasure" title="体积量算对象（方量分析），" ><a href="VolumeMeasure.html">VolumeMeasure</a></li><li data-name="VRButton" title="VR效果按钮 控件 (Cesium原生)" ><a href="VRButton.html">VRButton</a></li><li data-name="WallCombine" title="大数据 墙 集合 (合并渲染) Primitive图元 矢量对象" ><a href="WallCombine.html">WallCombine</a></li><li data-name="WallEntity" title="墙  Entity矢量数据" ><a href="WallEntity.html">WallEntity</a></li><li data-name="WallPrimitive" ><a href="WallPrimitive.html">WallPrimitive</a></li><li data-name="WallScrollMaterialProperty" title="墙体:  走马灯围墙 材质" ><a href="WallScrollMaterialProperty.html">WallScrollMaterialProperty</a></li><li data-name="WallStyleConver" title="Wall 矢量数据style转换处理类" ><a href="WallStyleConver.html">WallStyleConver</a></li><li data-name="Water" title="水域面 Primitive图元 矢量对象" ><a href="Water.html">Water</a></li><li data-name="WaterCombine" title="大数据 水面集合 (合并渲染) Primitive图元 矢量对象" ><a href="WaterCombine.html">WaterCombine</a></li><li data-name="WaterLightMaterialProperty" title="线状 流动效果 材质" ><a href="WaterLightMaterialProperty.html">WaterLightMaterialProperty</a></li><li data-name="WaterMaterialProperty" title="水面效果材质" ><a href="WaterMaterialProperty.html">WaterMaterialProperty</a></li><li data-name="WfsLayer" title="WFS图层" ><a href="WfsLayer.html">WfsLayer</a></li><li data-name="WindLayer" title="风场图层，基于粒子实现(目前仅限webgl1渲染，不支持webgl2渲染)" ><a href="WindLayer.html">WindLayer</a></li><li data-name="WindUtil" title="风场相关 静态方法，【需要引入 gemini-wind 插件库】" ><a href="WindUtil.html">WindUtil</a></li><li data-name="WmsLayer" ><a href="WmsLayer.html">WmsLayer</a></li><li data-name="WmtsLayer" ><a href="WmtsLayer.html">WmtsLayer</a></li><li data-name="XyzLayer" title="标准xyz金字塔" ><a href="XyzLayer.html">XyzLayer</a></li><li data-name="Zoom" title="放大缩小按钮控件" ><a href="Zoom.html">Zoom</a></li></ul>
+    </div>
+</div>
+
+<script>
+if (window.frameElement) {
+    document.body.className = 'embedded';
+
+    var ele = document.createElement('a');
+    ele.className = 'popout';
+    ele.target = '_blank';
+    ele.href = window.location.href;
+    ele.title = 'Pop out';
+    document.getElementById('main').appendChild(ele);
+}
+
+// Set targets on external links.  Sandcastle and GitHub shouldn't be embedded in any iframe.
+Array.prototype.forEach.call(document.getElementsByTagName('a'), function(a) {
+    if (/^https?:/i.test(a.getAttribute('href'))) {
+        a.target='_blank';
+    }
+});
+</script>
+
+<script src="javascript/prism.js"></script>
+<script src="javascript/cesiumDoc.js"></script>
+
+</body>
+</html>

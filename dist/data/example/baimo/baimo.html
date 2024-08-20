@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>3DTiles城市白膜</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <div style="position: relative; display: flex; justify-content: space-around; top: 15px;">
+            <div class="gemini-buttom-light" onclick="baimoMat()">切换白膜材质</div>
+            <div class="gemini-buttom-light" onclick="buildingMat(1)">切换楼面材质</div>
+        </div>
+        <div style="position: relative; display: flex; justify-content: space-around; top: 40px;">
+            <div class="gemini-buttom-light" onclick="fanguangMat()">切换泛光材质</div>
+            <div class="gemini-buttom-light" onclick="buildingMat(2)">切换夜间材质</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+        let mapOptions = {
+            scene: {
+                // globe: {
+                //     depthTestAgainstTerrain: true,
+                //     showGroundAtmosphere: false,
+                // },
+                center: { "lat": 36.653309, "lng": 117.048105, "alt": 1122.6, "heading": 297.9, "pitch": -26.6 }
+            },
+            // mouse: {
+            //     enabledMoveTarget: false,
+            // },
+            terrain: {
+                url: `${window.GLOBAL_CONFIG.dataSever}/data/terrain30/jn30terrain`,
+                show: false
+            },
+            control: {
+                clockAnimate: true, // 时钟动画控制(左下角)
+                timeline: true, // 是否显示时间线控件
+            },
+            basemaps: [
+                {
+                    id: "tdt_img",
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.postProcessStages.fxaa.enabled = true
+        map.scene.globe.enableLighting = true;
+        map.scene.fog.enabled = false;
+
+        map.scene.globe.dynamicAtmosphereLighting = true;
+        map.scene.globe.dynamicAtmosphereLightingFromSun = false;
+
+        let tiles3dLayer = new gemini.layer.TilesetLayer({
+            name: "济南白膜",
+            url: window.GLOBAL_CONFIG.dataSever + "/data/jn/3dtiles/tileset.json",
+            position: {
+                alt: -27
+            },
+            flyTo: false,
+            shadows: Cesium.ShadowMode.ENABLED
+        })
+
+        let tdtLayer = map.getLayerById("tdt_img")
+
+        // 楼面材质
+        function buildingMat(type) {
+            if (type == 1) {
+                tdtLayer.brightness = 1.0
+            } else {
+                tdtLayer.brightness = 0.3
+            }
+            tiles3dLayer.customShader = new Cesium.CustomShader({
+                lightingModel: type === 1 ? Cesium.LightingModel.PBR : Cesium.LightingModel.UNLIT,
+                varyings: {
+                    v_normalMC: Cesium.VaryingType.VEC3
+                },
+                uniforms: {
+                    u_texture: {
+                        value: new Cesium.TextureUniform({
+                            url: type === 1 ? "img/textures/building1.jpg" : "img/textures/building2.jpg"
+                        }),
+                        type: Cesium.UniformType.SAMPLER_2D
+                    },
+                    u_top: {
+                        value: type === 1 ? new Cesium.Cartesian3(1.0, 1.0, 1.0) : new Cesium.Cartesian3(0.0, 0.0, 0.0),
+                        type: Cesium.UniformType.VEC3
+                    }
+                },
+                vertexShaderText: `
+          void vertexMain(VertexInput vsInput, inout czm_modelVertexOutput vsOutput){
+              v_normalMC = vsInput.attributes.normalMC;
+            }`,
+                fragmentShaderText: `
+          void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
+            vec3 positionMC = fsInput.attributes.positionMC;
+            if (dot(vec3(0.0, 1.0, 0.0), v_normalMC) > 0.95) {
+              //处理楼顶:统一处理成深色。
+              material.diffuse = u_top;
+            } else {
+              //处理四个侧面: 贴一样的图
+              float width = 40.0;
+              float height = 40.0;
+
+              float textureX = 0.0;
+              float textureY = 0.0;
+
+              float dotXAxis = dot(vec3(1.0, 0.0, 0.0), v_normalMC);
+              
+              if (dotXAxis > 0.52 || dotXAxis < -0.52) {
+                // 东西面
+                textureX = mod(positionMC.y, width) / width;
+                float textureY = mod(positionMC.z, height) / height; //positionMC.y;
+                material.diffuse = texture(u_texture, vec2(textureY, textureX)).rgb;
+              } else {
+                // 南北面
+                textureX = mod(positionMC.x, width) / (width); //positionMC.z
+                textureY = mod(positionMC.y, height) / height; //positionMC.y;
+                material.diffuse = texture(u_texture, vec2(textureX, textureY)).rgb;
+              }
+  
+            }
+          }`
+            })
+
+        }
+
+        // 白膜材质
+        function baimoMat() {
+            tdtLayer.brightness = 1.0
+            tiles3dLayer.customShader = null
+        }
+
+        // 泛光材质
+        function fanguangMat() {
+            tdtLayer.brightness = 0.3
+            tiles3dLayer.customShader = new Cesium.CustomShader({
+                lightingModel: Cesium.LightingModel.UNLIT,
+                fragmentShaderText: `
+            void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
+            {
+              vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // 位置
+      
+              // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
+              float _baseHeight = 50.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
+              float _heightRange = 380.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
+              float _glowRange = 400.0; // 光环的移动范围(高度)
+      
+              // 建筑基础色
+              float _height = position.y - _baseHeight;
+              float _a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
+              float _a12 = _height / _heightRange + sin(_a11) * 0.1;
+      
+              material.diffuse = vec3(0.0, 0.439, 0.894); // 颜色
+              material.diffuse *= vec3(_a12);// 渐变
+      
+              // 动态光环
+              float time = fract(czm_frameNumber / 360.0);
+              time = abs(time - 0.5) * 2.0;
+              float _h = clamp(_height / _glowRange, 0.0, 1.0);
+              float _diff = step(0.005, abs(_h - time));
+              material.diffuse += material.diffuse * (1.0 - _diff);
+            } `
+            })
+        }
+
+        map.addLayer(tiles3dLayer)
+
+        function addModel() {
+            removeAll()
+            map.addLayer(tiles3dLayer)
+        }
+
+        // 清除
+        function removeAll() {
+            map.removeLayer(tiles3dLayer)
+        }
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 128px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 118px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

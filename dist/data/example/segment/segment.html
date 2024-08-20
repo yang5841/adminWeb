@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>倾斜模型单体化</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <div style="position: relative; display: flex; justify-content: space-around; top: 25px;">
+            <div class="gemini-buttom-light" onclick="enablePick()">开启单体化</div>
+        </div>
+
+        <div style="position: relative; display: flex; justify-content: space-around; top: 65px;">
+            <div class="gemini-buttom-dark" onclick="disablePick()">关闭单体化</div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+        let mapOptions = {
+            scene: {
+                // globe: {
+                //     depthTestAgainstTerrain: true,
+                //     showGroundAtmosphere: false,
+                // },
+                center: { "lat": 22.647307, "lng": 113.06153, "alt": 39.5, "heading": 7.4, "pitch": -17.6 }
+            },
+            // mouse: {
+            //     enabledMoveTarget: false,
+            // },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: false
+            },
+            control: {
+                clockAnimate: true, // 时钟动画控制(左下角)
+                timeline: true, // 是否显示时间线控件
+            },
+            basemaps: [
+                {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+
+        map.scene.postProcessStages.fxaa.enabled = true
+        map.scene.globe.enableLighting = true;
+        map.scene.fog.enabled = false;
+
+        map.scene.globe.dynamicAtmosphereLighting = true;
+        map.scene.globe.dynamicAtmosphereLightingFromSun = false;
+
+        let tiles3dLayer = new gemini.layer.TilesetLayer({
+            name: "深圳",
+            url: window.GLOBAL_CONFIG.dataSever + "/data/3dtiles/baoli/tileset.json",
+            position: {
+                alt: 44.3
+            },
+            flyTo: false,
+            // shadows: Cesium.ShadowMode.ENABLED
+        })
+        map.addLayer(tiles3dLayer)
+
+        const points = [
+            [
+                113.061126,
+                22.647948,
+                12.1
+            ],
+            [
+                113.061579,
+                22.648067,
+                16.4
+            ],
+            [
+                113.061643,
+                22.647884,
+                15.3
+            ],
+            [
+                113.061466,
+                22.647882,
+                66.9
+            ],
+            [
+                113.06157,
+                22.64765,
+                12
+            ],
+            [
+                113.061368,
+                22.647587,
+                11.4
+            ],
+            [
+                113.061302,
+                22.647785,
+                12.8
+            ],
+            [
+                113.06117,
+                22.647751,
+                12.9
+            ]
+        ]
+
+        const graphic4 = new gemini.graphic.PolygonPrimitive({
+            positions: points,
+            style: {
+                height: 20,
+                extrudedHeight: 22.6,
+                // 单体化默认显示样式
+                color: Cesium.Color.RED,
+                opacity: 0.01,
+                classification: true,
+                // 单体化鼠标移入或单击后高亮的样式
+                highlight: {
+                    type: gemini.EventType.click,
+                    color: "#ffff00",
+                    opacity: 0.6
+                }
+            },
+            attr: {
+                family: "15",
+                population: "40",
+                name: "保利6号楼4层",
+            }
+        })
+        const graphic5 = new gemini.graphic.PolygonPrimitive({
+            positions: points,
+            style: {
+                height: 22.7,
+                extrudedHeight: 25.3,
+                // 单体化默认显示样式
+                color: Cesium.Color.RED,
+                opacity: 0.01,
+                classification: true,
+                // 单体化鼠标移入或单击后高亮的样式
+                highlight: {
+                    type: gemini.EventType.click,
+                    color: "#ffff00",
+                    opacity: 0.6
+                }
+            },
+            attr: {
+                family: "13",
+                population: "37",
+                name: "保利6号楼5层",
+            }
+        })
+
+        graphic4.bindPopup(buildingInfo)
+        graphic5.bindPopup(buildingInfo)
+
+        function buildingInfo(event) {
+            let attr = event.graphic.attr;
+            return gemini.Util.getTemplateHtml({
+                title: "分层信息",
+                template: [
+                    { field: "name", name: "楼层信息" },
+                    { field: "population", name: "人口数" },
+                    { field: "family", name: "户籍数" },
+                ],
+                attr: attr,
+            });
+        }
+        map.graphicLayer.addGraphic(graphic4)
+        map.graphicLayer.addGraphic(graphic5)
+
+        function enablePick() {
+            disablePick()
+            map.graphicLayer.addGraphic(graphic4)
+            map.graphicLayer.addGraphic(graphic5)
+        }
+
+        function disablePick() {
+            map.graphicLayer.removeGraphic(graphic4)
+            map.graphicLayer.removeGraphic(graphic5)
+        }
+
+
+    </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 130px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>

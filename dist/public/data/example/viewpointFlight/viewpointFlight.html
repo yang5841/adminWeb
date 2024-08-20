@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon/favicon.png" />
+    <title>视点飞行</title>
+
+    <link href="../../libs/gemini/gemini.css" rel="stylesheet" />
+    <link href="../../libs/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <link href="../../libs/style.css" rel="stylesheet" />
+    <script src="../../libs/Cesium/Cesium.js"></script>
+    <script src="../../libs/gemini/gemini.js"></script>
+    <script src="../../libs/log/Sandcastle.js"></script>
+    <script src="../../libs/log/log.js"></script>
+    <script src="../../config/index.js"></script>
+    <script src="../../libs/jquery/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <div id="geminiContainer" class="gemini-container"></div>
+    <div id="geminiToolbar" class="gemini-toolbar">
+        <button id="btn_pause" type="button" class="gemini-buttom-light" onclick="clickPause()"><i class="fa fa-pause-circle-o"></i>暂停</button>
+        <button id="btn_proceed" type="button" class="gemini-buttom-light" onclick="clickProceed()"><i class="fa fa-play-circle-o"></i>继续</button>
+    </div>
+
+    <script type="text/javascript">
+
+        // 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+        let mapOptions = {
+            scene: {
+                // center: { "lat": 22.64428, "lng": 113.062141, "alt": 200.8, "heading": 5.9, "pitch": -31.1 }
+            },
+            terrain: {
+                url: window.GLOBAL_CONFIG.dataSever + "/data/terrain30/jn30terrain",
+                show: true
+            },
+            basemaps: [
+            {
+                    name: "天地图影像(EPSG:3857)",
+                    icon: "img/basemaps/tdt_img.png",
+                    type: "tdt",
+                    layer: "img_d",
+                    key: gemini.Token.tiandituArr,
+                    show: true,
+
+                },
+                {
+                    name: "天地图电子(EPSG:3857)",
+                    icon: "img/basemaps/tdt_vec.png",
+                    type: "group",
+                    layers: [
+                        { name: "底图", type: "tdt", layer: "vec_d", key: gemini.Token.tiandituArr },
+                        { name: "注记", type: "tdt", layer: "vec_z", key: gemini.Token.tiandituArr }
+                    ],
+
+                },
+            ],
+            layers: [
+
+            ]
+        }
+
+        const map = new gemini.Map("geminiContainer", mapOptions)
+        // 开启键盘漫游
+        // map.keyboardRoam.enabled = true
+      
+        // map.keyboardRoam.minHeight = 80
+
+
+        var tiles3dLayer = new gemini.layer.TilesetLayer({
+            name: "深圳",
+            url: window.GLOBAL_CONFIG.dataSever + "/data/3dtiles/baoli/tileset.json",
+            position: {
+                alt: 4.3
+            },
+        //   maximumScreenSpaceError: 10
+            flyTo: false,
+        })
+        map.addLayer(tiles3dLayer)
+      
+        // 创建视点，duration参数调节每个步骤时长 
+        var viewPoints = [
+          { lat:22.655945,lng:113.070707,alt:730.3, heading:221.8, pitch:-31.2, duration: 6 ,stop: 0},
+          { lat:22.646036,lng:113.073491,alt:712.5, heading:270, pitch:-31.4, duration: 6 ,stop: 0},
+          { lat:22.63729,lng:113.068788,alt:723.7,heading:325.3,pitch:-31.3, duration: 8, stop: 0 },
+          { lat:22.637151,lng:113.054317,alt:665.7,heading:38.6,pitch:-31.3, duration: 8, stop: 0 },
+          { lat:22.646827,lng:113.050919,alt:715.7,heading:92.8,pitch:-31.3, duration: 8, stop: 0 },
+          { lat:22.655416,lng:113.055288,alt:663.,heading:137.2,pitch: -31.3,duration: 8,stop: 0},
+          { lat:22.655836,lng:113.069178,alt:653.7, heading:215.2, pitch:-31.3, duration: 8}
+        ]
+        // // 视角切换（分步执行）
+        map.setCameraViewList(viewPoints)
+
+        function pauseCameraViewList() {
+            map.pauseCameraViewList()
+        }
+        
+        function proceedCameraViewList() {
+            map.proceedCameraViewList()
+        }
+       
+       
+       
+    </script>
+    <script type="text/javascript">
+        "use script" //开发环境建议开启严格模式
+        //UI界面相关
+        // function initUI() {
+          $("#btn_proceed").hide()
+        // }
+  
+        function clickPause() {
+          $("#btn_pause").hide()
+          $("#btn_proceed").show()
+          pauseCameraViewList()
+        }
+  
+        function clickProceed() {
+          $("#btn_proceed").hide()
+          $("#btn_pause").show()
+          proceedCameraViewList()
+        }
+      </script>
+    <style>
+        .gemini-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .gemini-toolbar {
+            position: absolute;
+            width: 345px;
+            height: 248px;
+            right: 20px;
+            bottom: 40px;
+            background: #343333;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .gemini-buttom-dark {
+            position: relative;
+            width: 130px;
+            height: 32px;
+            background: rgba(0, 112, 228, 0);
+            border-radius: 4px;
+            border: 1px solid #0070E4;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #0070E4;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+        }
+
+        .gemini-buttom-dark:hover {
+            border: 1px solid #ffffff;
+            color: #fcfcfc;
+        }
+
+        .gemini-buttom-light {
+            position: relative;
+
+            width: 118px;
+            height: 32px;
+            background: #0070E4;
+            border-radius: 4px;
+
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #fcfcfc;
+            line-height: 32px;
+            text-align: center;
+            font-style: normal;
+            cursor: pointer;
+            border: none;
+            margin: 20px;
+        }
+
+        .gemini-buttom-light:hover {
+            background: #7daada;
+        }
+    </style>
+
+</body>
+
+</html>
